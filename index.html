@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-ao" class="scroll-smooth">
+<html lang="pt-ao" class="scroll-smooth overflow-x-hidden max-w-full">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,7 +13,7 @@
   <link rel="canonical" href="https://teudominio.com/" />
   <link rel="shortcut icon" href="icons/logo.png" type="image/x-icon">
 
-  <!-- Open Graph / WhatsApp / Facebook (Aparece lindo ao compartilhar no Telegram e Zap) -->
+  <!-- Open Graph / WhatsApp / Facebook -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://teudominio.com/" />
   <meta property="og:title" content="SNI Tester PRO — Análise de Conectividade SNI & Bug Hosts" />
@@ -26,7 +26,7 @@
   <meta name="twitter:description" content="Testador de SNI e Bug Hosts para Windows, Linux e Android." />
   <meta name="twitter:image" content="https://teudominio.com/icons/logo.png" />
 
-  <!-- Schema.org para o Google entender que é um Software/App -->
+  <!-- Schema.org -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -51,22 +51,22 @@
   <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
 </head>
-<body class="min-h-screen flex flex-col justify-between overflow-x-hidden relative selection:bg-cyan-500/30 selection:text-cyan-300">
+<body class="min-h-screen flex flex-col justify-between overflow-x-hidden max-w-full relative selection:bg-cyan-500/30 selection:text-cyan-300">
 
   <!-- Glow Orbs Animados (Fundo) -->
   <div class="orb orb-purple -left-20 -top-20 w-96 h-96 bg-indigo-600/30"></div>
   <div class="orb orb-cyan -right-20 top-1/3 w-[30rem] h-[30rem] bg-cyan-500/20"></div>
 
-  <!-- Header / Navbar -->
-  <header class="fixed top-0 inset-x-0 z-50 p-4">
-    <div class="max-w-6xl mx-auto glass rounded-2xl px-5 py-3 flex items-center justify-between shadow-2xl">
-      <a href="#inicio" class="flex items-center gap-3">
-        <div class="w-11 h-11 rounded-2xl overflow-hidden bg-slate-950/20 border border-slate-700/80 flex items-center justify-center">
+  <!-- Header / Navbar Otimizado para Mobile -->
+  <header class="fixed top-0 inset-x-0 z-50 p-2.5 sm:p-4">
+    <div class="max-w-6xl mx-auto glass rounded-2xl px-3.5 sm:px-5 py-2.5 sm:py-3 flex items-center justify-between shadow-2xl">
+      <a href="#inicio" class="flex items-center gap-2.5 sm:gap-3">
+        <div class="w-9 h-9 sm:w-11 sm:h-11 rounded-xl sm:rounded-2xl overflow-hidden bg-slate-950/20 border border-slate-700/80 flex items-center justify-center shrink-0">
           <img src="icons/logo.png" alt="SNI Tester PRO" class="w-full h-full object-contain" />
         </div>
         <div>
-          <p class="text-[10px] font-bold uppercase tracking-[0.25em] text-slate-400">SNI Tester PRO</p>
-          <p class="text-xs font-semibold text-slate-200">Desktop &amp; Mobile</p>
+          <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">SNI Tester PRO</p>
+          <p class="text-[11px] sm:text-xs font-semibold text-slate-200">Desktop &amp; Mobile</p>
         </div>
       </a>
 
@@ -90,8 +90,8 @@
     </div>
   </header>
 
-  <!-- Section Hero -->
-  <main id="inicio" class="relative z-10 pt-32 pb-16 px-6 max-w-5xl mx-auto text-center flex-1 flex flex-col justify-center items-center">
+  <!-- Section Hero Responsiva -->
+  <main id="inicio" class="relative z-10 pt-28 sm:pt-32 pb-16 px-4 sm:px-6 max-w-5xl mx-auto text-center flex-1 flex flex-col justify-center items-center w-full">
     
     <!-- Badge -->
     <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cyan-400/10 border border-cyan-400/20 text-cyan-300 text-xs font-semibold mb-6">
@@ -99,13 +99,13 @@
       <span>Análise Prática de Conectividade SNI</span>
     </div>
 
-    <!-- Título Principal -->
-    <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight text-white max-w-4xl leading-tight">
+    <!-- Título Principal Responsivo -->
+    <h1 class="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-white max-w-4xl leading-tight">
       Testes de SNI com precisão em <br class="hidden sm:block"/>
       <span class="bg-gradient-to-r from-cyan-400 via-sky-300 to-indigo-400 bg-clip-text text-transparent">Windows, Linux e Android</span>
     </h1>
 
-    <p class="mt-6 text-slate-300 text-base sm:text-lg max-w-2xl leading-relaxed">
+    <p class="mt-6 text-slate-300 text-sm sm:text-lg max-w-2xl leading-relaxed">
       Valide listas de hosts e portas com acompanhamento em tempo real, histórico local persistente e verificações profundas de latência e TLS.
     </p>
 
@@ -124,13 +124,22 @@
       </div>
     </div>
 
-    <!-- Botão Download OS -->
+    <!-- Botão Download OS + Contador de Downloads -->
     <div class="mt-10 flex flex-col items-center gap-3 w-full sm:w-auto">
       <a id="main-download-btn" href="#downloads" class="w-full sm:w-auto px-8 py-4 bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-extrabold text-base rounded-2xl shadow-lg shadow-cyan-400/20 hover:shadow-cyan-400/35 transition transform hover:-translate-y-0.5 flex items-center justify-center gap-3">
         <i class="ph ph-spinner animate-spin text-xl"></i>
         <span>Detectando sistema...</span>
       </a>
-      <span id="version-tag" class="text-xs font-mono text-slate-400">Buscando versão mais recente no GitHub...</span>
+
+      <!-- Tags de Versão e Contador Geral de Downloads -->
+      <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-xs text-slate-400">
+        <span id="version-tag" class="font-mono">Buscando versão...</span>
+        <span class="text-slate-600 hidden sm:inline">•</span>
+        <span class="inline-flex items-center gap-1.5 text-cyan-300 font-semibold bg-cyan-400/10 px-3 py-1 rounded-full border border-cyan-400/20">
+          <i class="ph ph-download-simple text-sm text-cyan-400"></i>
+          <span id="total-downloads-count" class="font-mono text-white">...</span> Pessoas já baixaram
+        </span>
+      </div>
     </div>
 
     <!-- Grid Cards de Downloads -->
@@ -322,7 +331,7 @@
       </div>
     </section>
 
-        <!-- Section FAQ (Perguntas Frequentes) -->
+    <!-- Section FAQ (Perguntas Frequentes) -->
     <section id="faq" class="w-full mt-20 pt-10 text-left">
       <div class="text-center mb-10">
         <p class="text-xs font-semibold uppercase tracking-[0.25em] text-cyan-400">Tire Suas Dúvidas</p>
@@ -440,10 +449,10 @@
     </section>
   </main>
 
-    <!-- Botão Flutuante Subir ao Topo Premium -->
-    <button id="back-to-top" aria-label="Subir ao topo" onclick="scrollToTop()" class="fixed bottom-6 right-6 z-50 p-3.5 rounded-2xl glass border border-cyan-400/30 text-cyan-300 hover:text-slate-950 hover:bg-cyan-400 shadow-xl shadow-cyan-400/10 hover:shadow-cyan-400/30 transition-all duration-300 opacity-0 translate-y-6 pointer-events-none flex items-center justify-center group">
-      <i class="ph ph-arrow-up text-xl font-bold group-hover:-translate-y-0.5 transition-transform duration-200"></i>
-    </button>
+  <!-- Botão Flutuante Subir ao Topo Premium -->
+  <button id="back-to-top" aria-label="Subir ao topo" onclick="scrollToTop()" class="fixed bottom-6 right-6 z-50 p-3.5 rounded-2xl glass border border-cyan-400/30 text-cyan-300 hover:text-slate-950 hover:bg-cyan-400 shadow-xl shadow-cyan-400/10 hover:shadow-cyan-400/30 transition-all duration-300 opacity-0 translate-y-6 pointer-events-none flex items-center justify-center group">
+    <i class="ph ph-arrow-up text-xl font-bold group-hover:-translate-y-0.5 transition-transform duration-200"></i>
+  </button>
 
   <!-- Footer -->
   <footer class="relative z-10 border-t border-slate-800/80 py-8 px-6 text-center text-xs text-slate-500">
@@ -485,56 +494,49 @@
 
     // 2. Sistema de Abas da Instalação
     function switchTab(activeTabId) {
-  // 1. Alterna o estado visual dos botões
-  const tabs = ['tab-win', 'tab-android', 'tab-linux'];
+      const tabs = ['tab-win', 'tab-android', 'tab-linux'];
 
-  tabs.forEach(tabId => {
-    const btn = document.getElementById(`btn-${tabId}`);
-    const content = document.getElementById(tabId);
+      tabs.forEach(tabId => {
+        const btn = document.getElementById(`btn-${tabId}`);
+        const content = document.getElementById(tabId);
 
-    if (!btn || !content) return;
+        if (!btn || !content) return;
 
-    if (tabId === activeTabId) {
-      // Ativa o botão selecionado
-      btn.classList.add('bg-cyan-400', 'text-slate-950');
-      btn.classList.remove('text-slate-400');
+        if (tabId === activeTabId) {
+          btn.classList.add('bg-cyan-400', 'text-slate-950');
+          btn.classList.remove('text-slate-400');
 
-      // Exibe o conteúdo com transição suave
-      content.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-2');
-      content.classList.add('opacity-100', 'pointer-events-auto', 'translate-y-0');
-    } else {
-      // Desativa os outros botões
-      btn.classList.remove('bg-cyan-400', 'text-slate-950');
-      btn.classList.add('text-slate-400');
+          content.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-2');
+          content.classList.add('opacity-100', 'pointer-events-auto', 'translate-y-0');
+        } else {
+          btn.classList.remove('bg-cyan-400', 'text-slate-950');
+          btn.classList.add('text-slate-400');
 
-      // Esconde o conteúdo inativo suavemente
-      content.classList.remove('opacity-100', 'pointer-events-auto', 'translate-y-0');
-      content.classList.add('opacity-0', 'pointer-events-none', 'translate-y-2');
+          content.classList.remove('opacity-100', 'pointer-events-auto', 'translate-y-0');
+          content.classList.add('opacity-0', 'pointer-events-none', 'translate-y-2');
+        }
+      });
     }
-  });
-}
 
     // 3. Sistema Accordion FAQ
     function toggleFaq(id) {
-  const content = document.getElementById(id);
-  const icon = document.getElementById(`faq-icon-${id}`);
+      const content = document.getElementById(id);
+      const icon = document.getElementById(`faq-icon-${id}`);
 
-  if (!content || !icon) return;
+      if (!content || !icon) return;
 
-  const isOpen = content.classList.contains('grid-rows-[1fr]');
+      const isOpen = content.classList.contains('grid-rows-[1fr]');
 
-  if (isOpen) {
-    // Fecha o accordion suavemente
-    content.classList.remove('grid-rows-[1fr]', 'opacity-100');
-    content.classList.add('grid-rows-[0fr]', 'opacity-0');
-    icon.classList.remove('rotate-180');
-  } else {
-    // Abre o accordion suavemente
-    content.classList.remove('grid-rows-[0fr]', 'opacity-0');
-    content.classList.add('grid-rows-[1fr]', 'opacity-100');
-    icon.classList.add('rotate-180');
-  }
-}
+      if (isOpen) {
+        content.classList.remove('grid-rows-[1fr]', 'opacity-100');
+        content.classList.add('grid-rows-[0fr]', 'opacity-0');
+        icon.classList.remove('rotate-180');
+      } else {
+        content.classList.remove('grid-rows-[0fr]', 'opacity-0');
+        content.classList.add('grid-rows-[1fr]', 'opacity-100');
+        icon.classList.add('rotate-180');
+      }
+    }
 
     // 4. Sliders de Imagem
     function initImageSliders() {
@@ -582,7 +584,7 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // 6. Automação do GitHub Releases + Detecção de SO
+    // 6. Automação do GitHub Releases + Detecção de SO + Contador Total de Downloads
     const GITHUB_USER = 'devisaacson18';
     const GITHUB_REPO = 'sni-tester-pro';
 
@@ -598,8 +600,30 @@
       const mainBtn = document.getElementById('main-download-btn');
       const versionTag = document.getElementById('version-tag');
       const releaseStatus = document.getElementById('release-status');
+      const totalDownloadsEl = document.getElementById('total-downloads-count');
 
       try {
+        // --- 1. Busca todas as releases para somar os downloads acumulados ---
+        const releasesRes = await fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/releases?per_page=100`);
+        
+        if (releasesRes.ok) {
+          const releases = await releasesRes.json();
+          let totalDownloads = 0;
+
+          releases.forEach(release => {
+            if (release.assets && Array.isArray(release.assets)) {
+              release.assets.forEach(asset => {
+                totalDownloads += (asset.download_count || 0);
+              });
+            }
+          });
+
+          if (totalDownloadsEl) {
+            totalDownloadsEl.textContent = totalDownloads.toLocaleString('pt-BR');
+          }
+        }
+
+        // --- 2. Busca a última release para configurar os links e botões ---
         const res = await fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/releases/latest`);
         if (!res.ok) throw new Error('Não foi possível obter release');
 
@@ -649,6 +673,7 @@
         mainBtn.href = `https://github.com/${GITHUB_USER}/${GITHUB_REPO}/releases`;
         mainBtn.innerHTML = `<i class="ph ph-github-logo text-2xl"></i> <span>Ver Releases no GitHub</span>`;
         versionTag.textContent = 'Versão disponível no GitHub.';
+        if (totalDownloadsEl) totalDownloadsEl.textContent = '0';
       }
     }
 
