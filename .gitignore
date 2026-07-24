@@ -22,6 +22,10 @@ dist/
 tailwindcss
 tailwindcss.exe
 
+# Ignorar arquivos pesados de ícones no repositório/deploy
+icons/regular/
+icons/fill/
+
 # ==========================================
 # RUST / TAURI (Compilados ultra pesados!)
 # ==========================================
