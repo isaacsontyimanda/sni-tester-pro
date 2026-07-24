@@ -18,6 +18,10 @@ yarn-error.log*
 .vercel
 dist/
 
+# Executável Standalone do Tailwind CLI
+tailwindcss
+tailwindcss.exe
+
 # ==========================================
 # RUST / TAURI (Compilados ultra pesados!)
 # ==========================================

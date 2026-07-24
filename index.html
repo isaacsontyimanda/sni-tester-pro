@@ -43,99 +43,10 @@
   }
   </script>
 
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Tailwind CSS -->
+  <link rel="stylesheet" href="styles.css">
   <!-- Phosphor Icons CDN -->
   <script src="https://unpkg.com/@phosphor-icons/web"></script>
-
-  <style>
-    :root { color-scheme: dark; }
-    
-    /* --- TRANSIÇÃO SUAVE DE PÁGINA (FADE IN / FADE OUT) --- */
-    body { 
-      background-color: #090d16; 
-      color: #f8fafc; 
-      font-family: system-ui, -apple-system, sans-serif; 
-      opacity: 0;
-      transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    body.page-loaded { opacity: 1; }
-    body.page-exit { opacity: 0; }
-
-    .glass { background: rgba(15, 23, 42, 0.75); border: 1px solid rgba(148, 163, 184, 0.15); backdrop-filter: blur(16px); }
-    
-    /* --- EFEITO GLOW ORBS ANIMADOS (PREMIUM) --- */
-    .orb { 
-      position: fixed; 
-      border-radius: 9999px; 
-      pointer-events: none; 
-      filter: blur(80px); 
-      z-index: 0;
-      will-change: transform, opacity;
-    }
-
-    .orb-purple {
-      animation: float-purple 14s ease-in-out infinite alternate;
-    }
-
-    .orb-cyan {
-      animation: float-cyan 18s ease-in-out infinite alternate;
-    }
-
-    @keyframes float-purple {
-      0% {
-        transform: translate(0, 0) scale(1);
-        opacity: 0.30;
-      }
-      50% {
-        transform: translate(45px, 30px) scale(1.12);
-        opacity: 0.45;
-      }
-      100% {
-        transform: translate(-20px, 50px) scale(0.95);
-        opacity: 0.35;
-      }
-    }
-
-    @keyframes float-cyan {
-      0% {
-        transform: translate(0, 0) scale(1);
-        opacity: 0.20;
-      }
-      50% {
-        transform: translate(-50px, -35px) scale(1.18);
-        opacity: 0.35;
-      }
-      100% {
-        transform: translate(30px, 20px) scale(0.9);
-        opacity: 0.22;
-      }
-    }
-    
-    .social-btn { display: inline-flex; align-items: center; justify-content: center; width: 3rem; height: 3rem; border-radius: 9999px; border: 1px solid rgba(148,163,184,0.15); color: #cbd5e1; transition: all 0.2s ease; }
-    .social-btn:hover { color: #38bdf8; border-color: rgba(56,189,248,0.5); background: rgba(56,189,248,0.1); transform: translateY(-2px); }
-    .social-btn i { font-size: 1.35rem; }
-
-    /* --- SLIDER RESPONSIVO COM PROPORÇÕES NATIVAS --- */
-    .image-slider { 
-      position: relative; 
-      overflow: hidden; 
-      border-radius: 1.5rem; 
-      background: #020617; 
-      width: 100%; 
-    }
-    
-    .image-slider[data-slider="inicio"] { aspect-ratio: 1016 / 643; }
-    .image-slider[data-slider="recurso"] { aspect-ratio: 861 / 602; }
-
-    .slider-track { display: flex; transition: transform .6s cubic-bezier(0.16, 1, 0.3, 1); height: 100%; will-change: transform; }
-    .slider-slide { min-width: 100%; flex-shrink: 0; height: 100%; display: flex; align-items: center; justify-content: center; background: #020617; }
-    .slider-slide img { width: 100%; height: 100%; object-fit: contain !important; object-position: center; display: block; }
-
-    .feature-card { padding: 0.9rem; min-height: 5.25rem; display: flex; flex-direction: column; justify-content: space-between; }
-    .feature-card strong { font-size: 0.95rem; }
-    .feature-card span { font-size: 0.8rem; color: rgba(148,163,184,0.9); }
-  </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between overflow-x-hidden relative selection:bg-cyan-500/30 selection:text-cyan-300">
 
@@ -331,20 +242,21 @@
 
       <div class="glass rounded-3xl p-6 sm:p-8 border border-slate-800">
         <div class="flex items-center justify-center gap-2 p-1 bg-slate-900/80 border border-slate-800 rounded-2xl max-w-md mx-auto mb-8">
-          <button onclick="switchTab('tab-win')" id="btn-tab-win" class="tab-btn flex-1 py-2.5 px-4 rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 bg-cyan-400 text-slate-950">
+          <button onclick="switchTab('tab-win')" id="btn-tab-win" class="tab-btn flex-1 py-2.5 px-4 rounded-xl text-xs font-bold transition-all duration-300 flex items-center justify-center gap-2 bg-cyan-400 text-slate-950 cursor-pointer">
             <i class="ph ph-windows-logo text-base"></i> Windows
           </button>
-          <button onclick="switchTab('tab-android')" id="btn-tab-android" class="tab-btn flex-1 py-2.5 px-4 rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 text-slate-400 hover:text-white">
+          <button onclick="switchTab('tab-android')" id="btn-tab-android" class="tab-btn flex-1 py-2.5 px-4 rounded-xl text-xs font-bold transition-all duration-300 flex items-center justify-center gap-2 text-slate-400 cursor-pointer">
             <i class="ph ph-android-logo text-base"></i> Android
           </button>
-          <button onclick="switchTab('tab-linux')" id="btn-tab-linux" class="tab-btn flex-1 py-2.5 px-4 rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 text-slate-400 hover:text-white">
+          <button onclick="switchTab('tab-linux')" id="btn-tab-linux" class="tab-btn flex-1 py-2.5 px-4 rounded-xl text-xs font-bold transition-all duration-300 flex items-center justify-center gap-2 text-slate-400 cursor-pointer">
             <i class="ph ph-linux-logo text-base"></i> Linux
           </button>
         </div>
 
-        <div class="max-w-2xl mx-auto">
+        <!-- Container empilhado com Grid -->
+        <div class="max-w-2xl mx-auto grid grid-cols-1">
           <!-- Windows -->
-          <div id="tab-win" class="tab-content space-y-3">
+          <div id="tab-win" class="tab-content col-start-1 row-start-1 space-y-3 transition-all duration-300 ease-in-out opacity-100 pointer-events-auto translate-y-0">
             <div class="flex items-start gap-3 p-3 rounded-xl bg-slate-900/50 border border-slate-800">
               <span class="w-6 h-6 rounded-full bg-cyan-400/10 text-cyan-400 font-bold text-xs flex items-center justify-center shrink-0">1</span>
               <p class="text-sm text-slate-300">Baixe o instalador <code class="text-cyan-300 bg-slate-800 px-1.5 py-0.5 rounded text-xs">.exe</code> na área de downloads acima.</p>
@@ -360,7 +272,7 @@
           </div>
 
           <!-- Android -->
-          <div id="tab-android" class="tab-content space-y-3 hidden">
+          <div id="tab-android" class="tab-content col-start-1 row-start-1 space-y-3 transition-all duration-300 ease-in-out opacity-0 pointer-events-none translate-y-2">
             <div class="flex items-start gap-3 p-3 rounded-xl bg-slate-900/50 border border-slate-800">
               <span class="w-6 h-6 rounded-full bg-cyan-400/10 text-cyan-400 font-bold text-xs flex items-center justify-center shrink-0">1</span>
               <p class="text-sm text-slate-300">Baixe o pacote <code class="text-cyan-300 bg-slate-800 px-1.5 py-0.5 rounded text-xs">.apk</code> diretamente no seu celular.</p>
@@ -376,7 +288,7 @@
           </div>
 
           <!-- Linux -->
-          <div id="tab-linux" class="tab-content space-y-3 hidden">
+          <div id="tab-linux" class="tab-content col-start-1 row-start-1 space-y-3 transition-all duration-300 ease-in-out opacity-0 pointer-events-none translate-y-2">
             <div class="flex items-start gap-3 p-3 rounded-xl bg-slate-900/50 border border-slate-800">
               <span class="w-6 h-6 rounded-full bg-cyan-400/10 text-cyan-400 font-bold text-xs flex items-center justify-center shrink-0">1</span>
               <p class="text-sm text-slate-300">
@@ -407,7 +319,7 @@
       </div>
     </section>
 
-    <!-- Section FAQ (Perguntas Frequentes) -->
+        <!-- Section FAQ (Perguntas Frequentes) -->
     <section id="faq" class="w-full mt-20 pt-10 text-left">
       <div class="text-center mb-10">
         <p class="text-xs font-semibold uppercase tracking-[0.25em] text-cyan-400">Tire Suas Dúvidas</p>
@@ -416,57 +328,77 @@
 
       <div class="max-w-3xl mx-auto space-y-4">
         <!-- FAQ 1 -->
-        <div class="glass rounded-2xl border border-slate-800/80 overflow-hidden transition-all duration-200">
-          <button onclick="toggleFaq('faq-1')" class="w-full p-5 text-left flex items-center justify-between gap-4 focus:outline-none">
+        <div class="glass rounded-2xl border border-slate-800/80 overflow-hidden transition-all duration-300">
+          <button onclick="toggleFaq('faq-1')" class="w-full p-5 text-left flex items-center justify-between gap-4 focus:outline-none cursor-pointer">
             <span class="text-sm sm:text-base font-bold text-slate-200">O que é o SNI Tester PRO e para que ele serve?</span>
             <i id="faq-icon-faq-1" class="ph ph-caret-down text-cyan-400 text-lg transition-transform duration-300"></i>
           </button>
-          <div id="faq-1" class="hidden px-5 pb-5 pt-1 text-xs sm:text-sm text-slate-400 leading-relaxed border-t border-slate-800/40">
-            O SNI Tester PRO é uma ferramenta desenvolvida para testar e validar a conectividade de Server Name Indication (SNI) e portas em redes locais ou móveis. Ele permite importar listas de domínios, realizar testes de latência e TLS Handshake em tempo real e filtrar conexões válidas de forma prática.
+          <div id="faq-1" class="grid grid-rows-[0fr] opacity-0 transition-all duration-300 ease-in-out">
+            <div class="overflow-hidden">
+              <div class="px-5 pb-5 pt-1 text-xs sm:text-sm text-slate-400 leading-relaxed border-t border-slate-800/40">
+                O SNI Tester PRO é uma ferramenta desenvolvida para testar e validar a conectividade de Server Name Indication (SNI) e portas em redes locais ou móveis. Ele permite importar listas de domínios, realizar testes de latência e TLS Handshake em tempo real e filtrar conexões válidas de forma prática.
+              </div>
+            </div>
           </div>
         </div>
 
         <!-- FAQ 2 -->
-        <div class="glass rounded-2xl border border-slate-800/80 overflow-hidden transition-all duration-200">
-          <button onclick="toggleFaq('faq-2')" class="w-full p-5 text-left flex items-center justify-between gap-4 focus:outline-none">
+        <div class="glass rounded-2xl border border-slate-800/80 overflow-hidden transition-all duration-300">
+          <button onclick="toggleFaq('faq-2')" class="w-full p-5 text-left flex items-center justify-between gap-4 focus:outline-none cursor-pointer">
             <span class="text-sm sm:text-base font-bold text-slate-200">Minhas listas de hosts ou dados são compartilhados com alguém?</span>
             <i id="faq-icon-faq-2" class="ph ph-caret-down text-cyan-400 text-lg transition-transform duration-300"></i>
           </button>
-          <div id="faq-2" class="hidden px-5 pb-5 pt-1 text-xs sm:text-sm text-slate-400 leading-relaxed border-t border-slate-800/40">
-            Não. O aplicativo funciona 100% de forma local e offline no seu dispositivo. Suas listas importadas, preferências de teste e histórico de resultados são gravados estritamente na sua máquina ou smartphone.
+          <div id="faq-2" class="grid grid-rows-[0fr] opacity-0 transition-all duration-300 ease-in-out">
+            <div class="overflow-hidden">
+              <div class="px-5 pb-5 pt-1 text-xs sm:text-sm text-slate-400 leading-relaxed border-t border-slate-800/40">
+                Não. O aplicativo funciona 100% de forma local e offline no seu dispositivo. Suas listas importadas, preferências de teste e histórico de resultados são gravados estritamente na sua máquina ou smartphone.
+              </div>
+            </div>
           </div>
         </div>
 
         <!-- FAQ 3 -->
-        <div class="glass rounded-2xl border border-slate-800/80 overflow-hidden transition-all duration-200">
-          <button onclick="toggleFaq('faq-3')" class="w-full p-5 text-left flex items-center justify-between gap-4 focus:outline-none">
+        <div class="glass rounded-2xl border border-slate-800/80 overflow-hidden transition-all duration-300">
+          <button onclick="toggleFaq('faq-3')" class="w-full p-5 text-left flex items-center justify-between gap-4 focus:outline-none cursor-pointer">
             <span class="text-sm sm:text-base font-bold text-slate-200">Quais formatos de arquivos posso importar para os testes?</span>
             <i id="faq-icon-faq-3" class="ph ph-caret-down text-cyan-400 text-lg transition-transform duration-300"></i>
           </button>
-          <div id="faq-3" class="hidden px-5 pb-5 pt-1 text-xs sm:text-sm text-slate-400 leading-relaxed border-t border-slate-800/40">
-            Você pode importar arquivos nos formatos <code class="text-cyan-300 bg-slate-800 px-1 py-0.5 rounded text-xs">TXT</code>, <code class="text-cyan-300 bg-slate-800 px-1 py-0.5 rounded text-xs">CSV</code>, <code class="text-cyan-300 bg-slate-800 px-1 py-0.5 rounded text-xs">JSON</code>, <code class="text-cyan-300 bg-slate-800 px-1 py-0.5 rounded text-xs">PDF</code>, <code class="text-cyan-300 bg-slate-800 px-1 py-0.5 rounded text-xs">DOCX</code> e <code class="text-cyan-300 bg-slate-800 px-1 py-0.5 rounded text-xs">XLSX</code>. O leitor interno extrai automaticamente todos os domínios e IPs detectados no arquivo.
+          <div id="faq-3" class="grid grid-rows-[0fr] opacity-0 transition-all duration-300 ease-in-out">
+            <div class="overflow-hidden">
+              <div class="px-5 pb-5 pt-1 text-xs sm:text-sm text-slate-400 leading-relaxed border-t border-slate-800/40">
+                Você pode importar arquivos nos formatos <code class="text-cyan-300 bg-slate-800 px-1 py-0.5 rounded text-xs">TXT</code>, <code class="text-cyan-300 bg-slate-800 px-1 py-0.5 rounded text-xs">CSV</code>, <code class="text-cyan-300 bg-slate-800 px-1 py-0.5 rounded text-xs">JSON</code>, <code class="text-cyan-300 bg-slate-800 px-1 py-0.5 rounded text-xs">PDF</code>, <code class="text-cyan-300 bg-slate-800 px-1 py-0.5 rounded text-xs">DOCX</code> e <code class="text-cyan-300 bg-slate-800 px-1 py-0.5 rounded text-xs">XLSX</code>. O leitor interno extrai automaticamente todos os domínios e IPs detectados no arquivo.
+              </div>
+            </div>
           </div>
         </div>
 
         <!-- FAQ 4 -->
-        <div class="glass rounded-2xl border border-slate-800/80 overflow-hidden transition-all duration-200">
-          <button onclick="toggleFaq('faq-4')" class="w-full p-5 text-left flex items-center justify-between gap-4 focus:outline-none">
+        <div class="glass rounded-2xl border border-slate-800/80 overflow-hidden transition-all duration-300">
+          <button onclick="toggleFaq('faq-4')" class="w-full p-5 text-left flex items-center justify-between gap-4 focus:outline-none cursor-pointer">
             <span class="text-sm sm:text-base font-bold text-slate-200">O que é a verificação "Deep Scan (Anti-Spoofing)"?</span>
             <i id="faq-icon-faq-4" class="ph ph-caret-down text-cyan-400 text-lg transition-transform duration-300"></i>
           </button>
-          <div id="faq-4" class="hidden px-5 pb-5 pt-1 text-xs sm:text-sm text-slate-400 leading-relaxed border-t border-slate-800/40">
-            A verificação Deep Scan realiza um handshake TLS profundo para confirmar se o host respondeu legitimamente e se o certificado condiz com o servidor testado, eliminando falsos positivos gerados por redirecionamentos ou captive portals de operadoras.
+          <div id="faq-4" class="grid grid-rows-[0fr] opacity-0 transition-all duration-300 ease-in-out">
+            <div class="overflow-hidden">
+              <div class="px-5 pb-5 pt-1 text-xs sm:text-sm text-slate-400 leading-relaxed border-t border-slate-800/40">
+                A verificação Deep Scan realiza um handshake TLS profundo para confirmar se o host respondeu legitimamente e se o certificado condiz com o servidor testado, eliminando falsos positivos gerados por redirecionamentos ou captive portals de operadoras.
+              </div>
+            </div>
           </div>
         </div>
 
         <!-- FAQ 5 -->
-        <div class="glass rounded-2xl border border-slate-800/80 overflow-hidden transition-all duration-200">
-          <button onclick="toggleFaq('faq-5')" class="w-full p-5 text-left flex items-center justify-between gap-4 focus:outline-none">
+        <div class="glass rounded-2xl border border-slate-800/80 overflow-hidden transition-all duration-300">
+          <button onclick="toggleFaq('faq-5')" class="w-full p-5 text-left flex items-center justify-between gap-4 focus:outline-none cursor-pointer">
             <span class="text-sm sm:text-base font-bold text-slate-200">O SNI Tester PRO funciona em dispositivos móveis?</span>
             <i id="faq-icon-faq-5" class="ph ph-caret-down text-cyan-400 text-lg transition-transform duration-300"></i>
           </button>
-          <div id="faq-5" class="hidden px-5 pb-5 pt-1 text-xs sm:text-sm text-slate-400 leading-relaxed border-t border-slate-800/40">
-            Sim! Além das versões nativas para Windows e Linux (pacotes <code class="text-cyan-300 bg-slate-800 px-1 py-0.5 rounded text-xs">.deb</code> e <code class="text-cyan-300 bg-slate-800 px-1 py-0.5 rounded text-xs">.AppImage</code>), temos o aplicativo oficial em formato <code class="text-cyan-300 bg-slate-800 px-1 py-0.5 rounded text-xs">.apk</code> para Android com interface otimizada para telas sensíveis ao toque.
+          <div id="faq-5" class="grid grid-rows-[0fr] opacity-0 transition-all duration-300 ease-in-out">
+            <div class="overflow-hidden">
+              <div class="px-5 pb-5 pt-1 text-xs sm:text-sm text-slate-400 leading-relaxed border-t border-slate-800/40">
+                Sim! Além das versões nativas para Windows e Linux (pacotes <code class="text-cyan-300 bg-slate-800 px-1 py-0.5 rounded text-xs">.deb</code> e <code class="text-cyan-300 bg-slate-800 px-1 py-0.5 rounded text-xs">.AppImage</code>), temos o aplicativo oficial em formato <code class="text-cyan-300 bg-slate-800 px-1 py-0.5 rounded text-xs">.apk</code> para Android com interface otimizada para telas sensíveis ao toque.
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -505,10 +437,10 @@
     </section>
   </main>
 
-  <!-- Botão Flutuante Subir ao Topo Premium -->
-  <button id="back-to-top" aria-label="Subir ao topo" onclick="scrollToTop()" class="fixed bottom-6 right-6 z-50 p-3.5 rounded-2xl glass border border-cyan-400/30 text-cyan-300 hover:text-slate-950 hover:bg-cyan-400 shadow-xl shadow-cyan-400/10 hover:shadow-cyan-400/30 transition-all duration-300 opacity-0 translate-y-6 pointer-events-none flex items-center justify-center group">
-    <i class="ph ph-arrow-up text-xl font-bold group-hover:-translate-y-0.5 transition-transform duration-200"></i>
-  </button>
+    <!-- Botão Flutuante Subir ao Topo Premium -->
+    <button id="back-to-top" aria-label="Subir ao topo" onclick="scrollToTop()" class="fixed bottom-6 right-6 z-50 p-3.5 rounded-2xl glass border border-cyan-400/30 text-cyan-300 hover:text-slate-950 hover:bg-cyan-400 shadow-xl shadow-cyan-400/10 hover:shadow-cyan-400/30 transition-all duration-300 opacity-0 translate-y-6 pointer-events-none flex items-center justify-center group">
+      <i class="ph ph-arrow-up text-xl font-bold group-hover:-translate-y-0.5 transition-transform duration-200"></i>
+    </button>
 
   <!-- Footer -->
   <footer class="relative z-10 border-t border-slate-800/80 py-8 px-6 text-center text-xs text-slate-500">
@@ -549,39 +481,57 @@
     document.getElementById('year').textContent = new Date().getFullYear();
 
     // 2. Sistema de Abas da Instalação
-    function switchTab(tabId) {
-      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-      document.querySelectorAll('.tab-btn').forEach(btn => {
-        btn.classList.remove('bg-cyan-400', 'text-slate-950');
-        btn.classList.add('text-slate-400');
-      });
+    function switchTab(activeTabId) {
+  // 1. Alterna o estado visual dos botões
+  const tabs = ['tab-win', 'tab-android', 'tab-linux'];
 
-      document.getElementById(tabId).classList.remove('hidden');
-      const activeBtn = document.getElementById('btn-' + tabId);
-      activeBtn.classList.add('bg-cyan-400', 'text-slate-950');
-      activeBtn.classList.remove('text-slate-400');
+  tabs.forEach(tabId => {
+    const btn = document.getElementById(`btn-${tabId}`);
+    const content = document.getElementById(tabId);
+
+    if (!btn || !content) return;
+
+    if (tabId === activeTabId) {
+      // Ativa o botão selecionado
+      btn.classList.add('bg-cyan-400', 'text-slate-950');
+      btn.classList.remove('text-slate-400');
+
+      // Exibe o conteúdo com transição suave
+      content.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-2');
+      content.classList.add('opacity-100', 'pointer-events-auto', 'translate-y-0');
+    } else {
+      // Desativa os outros botões
+      btn.classList.remove('bg-cyan-400', 'text-slate-950');
+      btn.classList.add('text-slate-400');
+
+      // Esconde o conteúdo inativo suavemente
+      content.classList.remove('opacity-100', 'pointer-events-auto', 'translate-y-0');
+      content.classList.add('opacity-0', 'pointer-events-none', 'translate-y-2');
     }
+  });
+}
 
     // 3. Sistema Accordion FAQ
-    function toggleFaq(faqId) {
-      const content = document.getElementById(faqId);
-      const icon = document.getElementById('faq-icon-' + faqId);
+    function toggleFaq(id) {
+  const content = document.getElementById(id);
+  const icon = document.getElementById(`faq-icon-${id}`);
 
-      const isHidden = content.classList.contains('hidden');
+  if (!content || !icon) return;
 
-      // Fecha todos os outros FAQs para manter limpo
-      document.querySelectorAll('#faq [id^="faq-"]').forEach(el => {
-        if (!el.id.includes('icon')) el.classList.add('hidden');
-      });
-      document.querySelectorAll('#faq [id^="faq-icon-"]').forEach(el => {
-        el.classList.remove('rotate-180');
-      });
+  const isOpen = content.classList.contains('grid-rows-[1fr]');
 
-      if (isHidden) {
-        content.classList.remove('hidden');
-        icon.classList.add('rotate-180');
-      }
-    }
+  if (isOpen) {
+    // Fecha o accordion suavemente
+    content.classList.remove('grid-rows-[1fr]', 'opacity-100');
+    content.classList.add('grid-rows-[0fr]', 'opacity-0');
+    icon.classList.remove('rotate-180');
+  } else {
+    // Abre o accordion suavemente
+    content.classList.remove('grid-rows-[0fr]', 'opacity-0');
+    content.classList.add('grid-rows-[1fr]', 'opacity-100');
+    icon.classList.add('rotate-180');
+  }
+}
 
     // 4. Sliders de Imagem
     function initImageSliders() {

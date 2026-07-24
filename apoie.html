@@ -33,54 +33,10 @@
   <!-- Favicon e Ícones -->
   <link rel="shortcut icon" href="icons/logo.png" type="image/x-icon" />
 
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Tailwind CSS -->
+  <link rel="stylesheet" href="styles.css">
   <!-- Phosphor Icons CDN -->
   <script src="https://unpkg.com/@phosphor-icons/web"></script>
-
-  <style>
-    :root { color-scheme: dark; }
-    
-    /* Transição Suave de Página (Fade-In / Fade-Out) */
-    body { 
-      background-color: #090d16; 
-      color: #f8fafc; 
-      font-family: system-ui, -apple-system, sans-serif; 
-      opacity: 0;
-      transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    body.page-loaded { opacity: 1; }
-    body.page-exit { opacity: 0; }
-
-    .glass { background: rgba(15, 23, 42, 0.75); border: 1px solid rgba(148, 163, 184, 0.15); backdrop-filter: blur(16px); }
-    
-    /* Glow Orbs Animados */
-    .orb { 
-      position: fixed; 
-      border-radius: 9999px; 
-      pointer-events: none; 
-      filter: blur(80px); 
-      z-index: 0;
-      will-change: transform, opacity;
-    }
-    .orb-purple { animation: float-purple 14s ease-in-out infinite alternate; }
-    .orb-cyan { animation: float-cyan 18s ease-in-out infinite alternate; }
-
-    @keyframes float-purple {
-      0% { transform: translate(0, 0) scale(1); opacity: 0.30; }
-      50% { transform: translate(45px, 30px) scale(1.12); opacity: 0.45; }
-      100% { transform: translate(-20px, 50px) scale(0.95); opacity: 0.35; }
-    }
-    @keyframes float-cyan {
-      0% { transform: translate(0, 0) scale(1); opacity: 0.20; }
-      50% { transform: translate(-50px, -35px) scale(1.18); opacity: 0.35; }
-      100% { transform: translate(30px, 20px) scale(0.9); opacity: 0.22; }
-    }
-
-    .social-btn { display: inline-flex; align-items: center; justify-content: center; width: 3rem; height: 3rem; border-radius: 9999px; border: 1px solid rgba(148,163,184,0.15); color: #cbd5e1; transition: all 0.2s ease; }
-    .social-btn:hover { color: #38bdf8; border-color: rgba(56,189,248,0.5); background: rgba(56,189,248,0.1); transform: translateY(-2px); }
-    .social-btn i { font-size: 1.35rem; }
-  </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between overflow-x-hidden relative selection:bg-cyan-500/30 selection:text-cyan-300">
 
