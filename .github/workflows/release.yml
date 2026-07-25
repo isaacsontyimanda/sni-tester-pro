@@ -20,9 +20,9 @@ jobs:
       matrix:
         include:
           - platform: 'windows-latest'
-            args: ''
+            args: '--bundles nsis'
           - platform: 'ubuntu-22.04'
-            args: '--bundle appimage,deb'
+            args: '--bundles appimage,deb'
 
     runs-on: ${{ matrix.platform }}
 
@@ -39,10 +39,12 @@ jobs:
             libwebkit2gtk-4.1-dev \
             libsoup-3.0-dev \
             libappindicator3-dev \
+            libayatana-appindicator3-dev \
             librsvg2-dev \
             patchelf \
             squashfs-tools \
-            file
+            file \
+            pkg-config
 
       - name: Configurar Node.js
         uses: actions/setup-node@v4
