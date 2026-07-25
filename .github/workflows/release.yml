@@ -5,11 +5,13 @@ on:
     tags:
       - 'v*'
   workflow_dispatch:
+    inputs:
+      version:
+        description: 'Tag da versão (ex: v4.0.5)'
+        required: true
+        default: 'v4.0.5'
 
 jobs:
-  # ==========================================
-  # BUILD DESKTOP (Windows .exe / Linux .deb, .AppImage)
-  # ==========================================
   build-desktop:
     permissions:
       contents: write
@@ -28,11 +30,11 @@ jobs:
       - name: Checkout do código
         uses: actions/checkout@v4
 
-      - name: Instalar dependências no Linux (GTK e WebKit)
+      - name: Instalar dependências no Linux (Tauri v2)
         if: matrix.platform == 'ubuntu-22.04'
         run: |
           sudo apt-get update
-          sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.0-dev libappindicator3-dev librsvg2-dev patchelf
+          sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.1-dev libsoup-3.0-dev libappindicator3-dev librsvg2-dev patchelf
 
       - name: Configurar Node.js
         uses: actions/setup-node@v4
@@ -42,10 +44,10 @@ jobs:
       - name: Instalar Rust
         uses: dtolnay/rust-toolchain@stable
 
-      - name: Instalar dependências do Frontend (na pasta desktop)
+      - name: Instalar dependências do Frontend (se houver package.json)
         run: |
           cd desktop
-          npm install
+          if [ -f package.json ]; then npm install; fi
 
       - name: Compilar com Tauri Action (.exe, .deb, .AppImage)
         uses: tauri-apps/tauri-action@v0
@@ -53,8 +55,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           projectPath: 'desktop'
-          tagName: ${{ github.ref_name }}
-          releaseName: 'SNI Tester PRO ${{ github.ref_name }}'
+          tagName: ${{ github.event.inputs.version || github.ref_name }}
+          releaseName: 'SNI Tester PRO ${{ github.event.inputs.version || github.ref_name }}'
           releaseBody: 'Nova versão disponível para Windows e Linux!'
           releaseDraft: true
           prerelease: false
