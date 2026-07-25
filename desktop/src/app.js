@@ -22,7 +22,7 @@ let testedCount = 0;
 let selectedSession = null, statusFilter = null, searchQuery = '';
 const APP_VERSION = '4.0.5';
 const RELEASE_API = 'https://api.github.com/repos/devisaacson18/sni-tester-pro/releases/latest';
-const OFFICIAL_SITE = 'https://github.com/devisaacson18/sni-tester-pro/releases';
+const OFFICIAL_SITE = 'https://sni-tester-pro.vercel.app';
 
 const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
