@@ -53,11 +53,17 @@ jobs:
       - name: Instalar Rust
         uses: dtolnay/rust-toolchain@stable
 
-      - name: Instalar dependências do Frontend (se houver package.json)
+      - name: Instalar dependências do Frontend
         shell: bash
         run: |
           cd desktop
-          if [ -f package.json ]; then npm install; fi
+          if [ -f package.json ]; then
+            if [ -f package-lock.json ]; then
+              npm ci
+            else
+              npm install
+            fi
+          fi
 
       - name: Compilar com Tauri Action (.exe, .deb, .AppImage)
         uses: tauri-apps/tauri-action@v0
