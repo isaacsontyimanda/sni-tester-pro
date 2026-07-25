@@ -752,20 +752,6 @@ setInterval(() => {
 }, 8000);
 renderTip();
 
-const WELCOME_KEY = 'welcome_shown_v4_0_5';
-function initWelcomeSummary() {
-  const welcome = $('welcomeSummary');
-  if (!welcome) return;
-  const shown = store.get(WELCOME_KEY, false);
-  if (!shown) {
-    welcome.classList.remove('hidden');
-    store.set(WELCOME_KEY, true);
-  }
-  const btn = $('dismissWelcomeBtn');
-  if (btn) btn.onclick = () => welcome.classList.add('hidden');
-}
-initWelcomeSummary();
-
 // ---------- Boot ----------
 (async function init() {
   try {
