@@ -174,7 +174,7 @@
             <h3 class="text-xl font-bold text-white">Android</h3>
             <p class="text-sm text-slate-400 mt-2 leading-relaxed">Instale o arquivo APK direto no seu smartphone para testes mobile rápidos.</p>
           </div>
-          <a id="link-android" href="https://github.com/devisaacson18/sni-tester-pro/releases/download/v4.0.4/SNI.Tester.PRO.4.0.2.apk" target="_blank" class="mt-6 block w-full py-3 text-center bg-slate-800 hover:bg-cyan-400 hover:text-slate-950 text-cyan-300 font-bold text-sm rounded-xl transition">
+          <a id="link-android" href="https://github.com/devisaacson18/sni-tester-pro/releases/latest" target="_blank" class="mt-6 block w-full py-3 text-center bg-slate-800 hover:bg-cyan-400 hover:text-slate-950 text-cyan-300 font-bold text-sm rounded-xl transition">
             Baixar APK (.apk)
           </a>
         </div>
@@ -204,16 +204,16 @@
             <p class="text-sm text-slate-400 mt-2 leading-relaxed">Pacotes pré-compilados em <code class="text-cyan-300 bg-slate-800 px-1.5 py-0.5 rounded text-xs">.deb</code> e <code class="text-cyan-300 bg-slate-800 px-1.5 py-0.5 rounded text-xs">.AppImage</code> para distribuições Linux.</p>
           </div>
           <div class="mt-6 flex flex-col gap-2">
-            <a id="link-linux-deb" href="https://github.com/devisaacson18/sni-tester-pro/releases/download/v4.0.4/SNI.Tester.PRO.4.0.4.amd64.deb" target="_blank" class="w-full py-2.5 text-center bg-slate-800 hover:bg-cyan-400 hover:text-slate-950 text-cyan-300 font-bold text-xs rounded-xl transition">
+            <a id="link-linux-deb" href="https://github.com/devisaacson18/sni-tester-pro/releases/latest" target="_blank" class="w-full py-2.5 text-center bg-slate-800 hover:bg-cyan-400 hover:text-slate-950 text-cyan-300 font-bold text-xs rounded-xl transition">
               Baixar .deb
             </a>
-            <a id="link-linux-appimage" href="https://github.com/devisaacson18/sni-tester-pro/releases/download/v4.0.4/SNI.Tester.PRO.4.0.4.amd64.AppImage" target="_blank" class="w-full py-2.5 text-center bg-slate-800 hover:bg-cyan-400 hover:text-slate-950 text-cyan-300 font-bold text-xs rounded-xl transition">
+            <a id="link-linux-appimage" href="https://github.com/devisaacson18/sni-tester-pro/releases/latest" target="_blank" class="w-full py-2.5 text-center bg-slate-800 hover:bg-cyan-400 hover:text-slate-950 text-cyan-300 font-bold text-xs rounded-xl transition">
               Baixar .AppImage
             </a>
           </div>
         </div>
       </div>
-      <p id="release-status" class="text-xs text-slate-500 text-center mt-6">Os downloads são puxados automaticamente da última release do GitHub.</p>
+      <p id="release-status" class="text-xs text-slate-500 text-center mt-6">Os downloads são sincronizados automaticamente da última release do GitHub.</p>
     </section>
 
     <!-- Section Recursos -->
@@ -599,7 +599,7 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // 6. Automação do GitHub Releases + Detecção de SO + Contador Total de Downloads
+    // 6. Automação Dinâmica via GitHub Releases API
     const GITHUB_USER = 'devisaacson18';
     const GITHUB_REPO = 'sni-tester-pro';
 
@@ -618,7 +618,7 @@
       const totalDownloadsEl = document.getElementById('total-downloads-count');
 
       try {
-        // --- 1. Busca todas as releases para somar os downloads acumulados ---
+        // --- 1. Busca histórico de releases para somar total de downloads ---
         const releasesRes = await fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/releases?per_page=100`);
         
         if (releasesRes.ok) {
@@ -638,7 +638,7 @@
           }
         }
 
-        // --- 2. Busca a última release para configurar os links e botões ---
+        // --- 2. Busca os arquivos gerados na última release do GitHub Actions ---
         const res = await fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/releases/latest`);
         if (!res.ok) throw new Error('Não foi possível obter release');
 
@@ -652,20 +652,33 @@
           const name = asset.name.toLowerCase();
           if (name.endsWith('.apk')) downloads.android = asset.browser_download_url;
           if (name.endsWith('.exe') || name.endsWith('.msi')) downloads.windows = asset.browser_download_url;
-          if (name.endsWith('.deb') || name.endsWith('.appimage')) downloads.linux = asset.browser_download_url;
+          if (name.endsWith('.deb')) downloads.linuxDeb = asset.browser_download_url;
+          if (name.endsWith('.appimage')) downloads.linuxAppImage = asset.browser_download_url;
         });
 
-        if (downloads.android) document.getElementById('link-android').href = downloads.android;
-        if (downloads.windows) document.getElementById('link-win').href = downloads.windows;
-        if (downloads.linux) {
-          const debLink = document.getElementById('link-linux-deb');
-          if (debLink) debLink.href = downloads.linux;
+        // Atualiza os links dos cards
+        if (downloads.android) {
+          const el = document.getElementById('link-android');
+          if (el) el.href = downloads.android;
+        }
+        if (downloads.windows) {
+          const el = document.getElementById('link-win');
+          if (el) el.href = downloads.windows;
+        }
+        if (downloads.linuxDeb) {
+          const el = document.getElementById('link-linux-deb');
+          if (el) el.href = downloads.linuxDeb;
+        }
+        if (downloads.linuxAppImage) {
+          const el = document.getElementById('link-linux-appimage');
+          if (el) el.href = downloads.linuxAppImage;
         }
 
-        const os = detectOS();
-        if (tag) versionTag.textContent = `Última versão: ${tag}`;
-        if (releaseStatus) releaseStatus.textContent = `Downloads automatizados da versão ${tag} via GitHub.`;
+        if (tag && versionTag) versionTag.textContent = `Última versão: ${tag}`;
+        if (releaseStatus) releaseStatus.textContent = `Downloads automatizados da versão ${tag} via GitHub Actions.`;
 
+        // Ajusta botão principal conforme o sistema operacional do usuário
+        const os = detectOS();
         if (os === 'windows' && downloads.windows) {
           mainBtn.href = downloads.windows;
           mainBtn.innerHTML = `<i class="ph ph-windows-logo text-2xl"></i> <span>Baixar para Windows (${tag})</span>`;
@@ -674,8 +687,8 @@
           mainBtn.href = downloads.android;
           mainBtn.innerHTML = `<i class="ph ph-android-logo text-2xl"></i> <span>Baixar APK (${tag})</span>`;
           switchTab('tab-android');
-        } else if (os === 'linux' && downloads.linux) {
-          mainBtn.href = downloads.linux;
+        } else if (os === 'linux' && (downloads.linuxDeb || downloads.linuxAppImage)) {
+          mainBtn.href = downloads.linuxDeb || downloads.linuxAppImage;
           mainBtn.innerHTML = `<i class="ph ph-linux-logo text-2xl"></i> <span>Baixar para Linux (${tag})</span>`;
           switchTab('tab-linux');
         } else {
@@ -684,11 +697,11 @@
         }
 
       } catch (err) {
-        console.warn('Usando fallback do GitHub Releases:', err);
+        console.warn('Usando fallback para o GitHub Releases:', err);
         mainBtn.href = `https://github.com/${GITHUB_USER}/${GITHUB_REPO}/releases`;
         mainBtn.innerHTML = `<i class="ph ph-github-logo text-2xl"></i> <span>Ver Releases no GitHub</span>`;
-        versionTag.textContent = 'Versão disponível no GitHub.';
-        if (totalDownloadsEl) totalDownloadsEl.textContent = '0';
+        if (versionTag) versionTag.textContent = 'Versão disponível no GitHub.';
+        if (totalDownloadsEl && totalDownloadsEl.textContent === '...') totalDownloadsEl.textContent = '0';
       }
     }
 

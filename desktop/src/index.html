@@ -6,128 +6,52 @@
 <title>SNI Tester PRO</title>
 <link rel="stylesheet" href="styles.css" />
 <style>
-  /* ===== Tema Tahoe escuro ===== */
   :root { --bg1:#0F172A; --bg2:#1E1B4B; --bg3:#312E81; --fg:#ffffff;
           --glass:rgba(255,255,255,.08); --glass2:rgba(255,255,255,.05); --border:rgba(255,255,255,.15); }
   body { color: var(--fg); font-family: ui-sans-serif, system-ui, sans-serif; }
-
-  .glass      { background: var(--glass);  border: .5px solid var(--border); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+  .glass { background: var(--glass); border: .5px solid var(--border); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
   .glass-soft { background: var(--glass2); border: .5px solid var(--border); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
-
-  /* ===== Orbs de luz (LightOrbs do Compose) ===== */
   .orb { position: fixed; border-radius: 9999px; pointer-events: none; z-index: 0; }
-  .orb-1 { width: 450px; height: 450px; top: -80px; left: -60px;
-           background: radial-gradient(circle, rgba(49,46,129,.45), transparent 70%);
-           animation: orb1 12s ease-in-out infinite alternate; }
-  .orb-2 { width: 500px; height: 500px; bottom: -120px; right: -80px;
-           background: radial-gradient(circle, rgba(30,27,75,.35), transparent 70%);
-           animation: orb2 14s ease-in-out infinite alternate; }
+  .orb-1 { width: 450px; height: 450px; top: -80px; left: -60px; background: radial-gradient(circle, rgba(49,46,129,.45), transparent 70%); animation: orb1 12s ease-in-out infinite alternate; }
+  .orb-2 { width: 500px; height: 500px; bottom: -120px; right: -80px; background: radial-gradient(circle, rgba(30,27,75,.35), transparent 70%); animation: orb2 14s ease-in-out infinite alternate; }
   @keyframes orb1 { from { transform: translate(-50px,-50px); } to { transform: translate(50px,150px); } }
-  @keyframes orb2 { from { transform: translate(60px,30px);  } to { transform: translate(-40px,-60px); } }
-
-  /* ===== Switch estilo Compose ===== */
-  .switch { width: 44px; height: 24px; border-radius: 9999px; background: rgba(128,128,128,.35);
-            position: relative; transition: background .2s; cursor: pointer; flex: none; }
-  .switch::after { content:''; position:absolute; top:3px; left:3px; width:18px; height:18px;
-                   border-radius:9999px; background:#fff; transition: transform .2s; }
+  @keyframes orb2 { from { transform: translate(60px,30px); } to { transform: translate(-40px,-60px); } }
+  .switch { width: 44px; height: 24px; border-radius: 9999px; background: rgba(128,128,128,.35); position: relative; transition: background .2s; cursor: pointer; flex: none; }
+  .switch::after { content:''; position:absolute; top:3px; left:3px; width:18px; height:18px; border-radius:9999px; background:#fff; transition: transform .2s; }
   .switch.on { background: rgba(218,165,32,.4); }
   .switch.on::after { transform: translateX(20px); background:#DAA520; }
-
   .fade-in { animation: fade .25s ease both; }
   @keyframes fade { from { opacity: 0; transform: translateY(6px);} to { opacity: 1; transform:none; } }
-
   ::-webkit-scrollbar { width: 6px; }
   ::-webkit-scrollbar-thumb { background: rgba(128,128,128,.35); border-radius: 3px; }
-
   input, textarea { outline: none; }
-  .search-field { position: relative; }
-  .search-field input { padding-left: 40px; }
-  .search-field .search-icon {
-    position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
-    pointer-events: none; color: #7dd3fc; font-size: 1rem;
-  }
   .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
   .drop-active { border-color:#38BDF8 !important; background:rgba(56,189,248,.14) !important; transform:scale(1.01); }
-
-  /* Dashboard organizado para a janela 800×600 e para o modo maximizado. */
   html, body { width:100%; height:100%; overflow:hidden; }
-  .desktop-shell {
-    box-sizing:border-box; width:100% !important; max-width:1024px !important;
-    height:100%; min-height:0 !important; margin:0 auto !important; padding:12px !important;
-    display:grid !important; grid-template-columns:minmax(0, 1fr);
-    grid-template-rows:48px minmax(0, 1fr); gap:12px;
-  }
+  .desktop-shell { box-sizing:border-box; width:100% !important; max-width:1024px !important; height:100%; min-height:0 !important; margin:0 auto !important; padding:12px !important; display:grid !important; grid-template-columns:minmax(0, 1fr); grid-template-rows:48px minmax(0, 1fr); gap:12px; }
   .desktop-shell > header { grid-column:1; grid-row:1; height:48px; margin:0 !important; }
   .desktop-shell > main, .desktop-shell > section { grid-column:1; grid-row:2; min-height:0; overflow:auto; padding-bottom:0; }
   #menuBtn { display:flex; }
-  #screen-main:not(.hidden) {
-    display:grid !important; grid-template-columns:220px minmax(0, 1fr);
-    grid-template-rows:30px minmax(235px, 1fr) 56px 42px; gap:10px; align-items:stretch;
-  }
+  #screen-main:not(.hidden) { display:grid !important; grid-template-columns:220px minmax(0, 1fr); grid-template-rows:30px minmax(235px, 1fr) 56px 42px; gap:10px; align-items:stretch; }
   #radarWrap { width:182px !important; height:182px !important; }
-  #screen-settings, #screen-results, #screen-logs, #screen-find-snis, #screen-about, #screen-credits { padding-right:4px; }
-  @media (min-width: 1050px) {
-    .desktop-shell { grid-template-columns:minmax(0, 1fr); padding:20px !important; gap:18px; }
-    #screen-main:not(.hidden) { grid-template-columns:280px minmax(0, 1fr); grid-template-rows:34px minmax(280px, 1fr) 68px 46px; gap:14px; }
-    #radarWrap { width:220px !important; height:220px !important; }
-  }
-  /* Menos ornamentos, mesma identidade Tahoe. */
+  #screen-settings, #screen-results, #screen-logs, #screen-find-snis, #screen-about, #screen-credits, #screen-whatsnew { padding-right:4px; }
+  @media (min-width: 1050px) { .desktop-shell { grid-template-columns:minmax(0, 1fr); padding:20px !important; gap:18px; } #screen-main:not(.hidden) { grid-template-columns:280px minmax(0, 1fr); grid-template-rows:34px minmax(280px, 1fr) 68px 46px; gap:14px; } #radarWrap { width:220px !important; height:220px !important; } }
   .desktop-shell > header { padding:0 14px !important; }
   #exportActions:not(.hidden) { display:flex; gap:6px; margin-left:auto; }
-  body {
-    background: radial-gradient(circle at top left, rgba(34,211,238,0.1), transparent 32%),
-                linear-gradient(135deg, #090d16 0%, #0f172a 45%, #111827 100%);
-    color: #f8fafc;
-    font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  }
-  #screen-main:not(.hidden) {
-    display:flex !important;
-    flex-direction:column;
-    gap:16px;
-    min-height:0;
-  }
-  #scanActionBtn {
-    min-width: 220px;
-    box-shadow: 0 10px 30px rgba(6,182,212,0.2);
-  }
-  #scanActionBtn.is-running {
-    border-color: rgba(251,113,133,0.35);
-    background: rgba(244,63,94,0.15);
-    color: #fecdd3;
-    box-shadow: 0 10px 30px rgba(244,63,94,0.16);
-  }
+  body { background: radial-gradient(circle at top left, rgba(34,211,238,0.1), transparent 32%), linear-gradient(135deg, #090d16 0%, #0f172a 45%, #111827 100%); color: #f8fafc; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+  #screen-main:not(.hidden) { display:flex !important; flex-direction:column; gap:16px; min-height:0; }
+  #scanActionBtn { min-width: 220px; box-shadow: 0 10px 30px rgba(6,182,212,0.2); }
+  #scanActionBtn.is-running { border-color: rgba(251,113,133,0.35); background: rgba(244,63,94,0.15); color: #fecdd3; box-shadow: 0 10px 30px rgba(244,63,94,0.16); }
   #terminalLog::-webkit-scrollbar { width: 6px; }
   #terminalLog::-webkit-scrollbar-thumb { background: rgba(148,163,184,0.3); border-radius: 999px; }
   #radarWrap canvas { filter: drop-shadow(0 0 18px rgba(34,211,238,0.16)); }
-  #screen-settings input, #screen-results input {
-    font-family: inherit;
-  }
-  #screen-find-snis .find-snis-intro {
-    max-width:48rem;
-    margin:-.5rem 0 1.25rem;
-    text-align:left;
-  }
-  #sniListEl .glass-soft {
-    border-color: rgba(100,116,139,.3);
-    background: rgba(15,23,42,.35);
-  }
-  .fchip.active-filter {
-    background: rgba(34,211,238,.15) !important;
-    border-color: rgba(34,211,238,.4) !important;
-    color: #22d3ee !important;
-  }
-  /* Menu suspenso: entra da direita e volta para a direita ao fechar. */
-  #menuOverlay, #menuOverlay.hidden {
-    display:block !important; opacity:0; pointer-events:none; background:transparent !important;
-    transition:opacity .2s ease;
-  }
+  .radar-off { color: #64748b; text-shadow: none; transition: color .25s ease, text-shadow .25s ease, transform .25s ease, opacity .25s ease; }
+  .radar-live { color: #34d399; text-shadow: 0 0 10px rgba(52,211,153,.45), 0 0 22px rgba(52,211,153,.2); animation: radar-live-pulse 1.2s ease-in-out infinite; transition: color .25s ease, text-shadow .25s ease, transform .25s ease, opacity .25s ease; }
+  @keyframes radar-live-pulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.04); opacity: .88; } }
+  .fchip.active-filter { background: rgba(34,211,238,.15) !important; border-color: rgba(34,211,238,.4) !important; color: #22d3ee !important; }
+  #menuOverlay, #menuOverlay.hidden { display:block !important; opacity:0; pointer-events:none; background:transparent !important; transition:opacity .2s ease; }
   #menuOverlay:not(.hidden) { opacity:1; pointer-events:auto; background:rgba(0,0,0,.24) !important; }
-  #menuOverlay nav {
-    top:0; bottom:0; left:auto; right:0; width:230px; height:100%; border-radius:0 !important;
-    padding:68px 14px 16px !important;
-    opacity:0; transform:translateX(calc(100% + 20px));
-    transition:transform .24s ease, opacity .18s ease;
-  }
+  #menuOverlay nav { top:0; bottom:0; left:auto; right:0; width:230px; height:100%; border-radius:0 !important; padding:68px 14px 16px !important; opacity:0; transform:translateX(calc(100% + 20px)); transition:transform .24s ease, opacity .18s ease; }
   #menuOverlay:not(.hidden) nav { opacity:1; transform:translateX(0); }
   .menu-close { position:absolute; top:16px; right:14px; width:32px; height:32px; display:flex; align-items:center; justify-content:center; border:1px solid var(--border); border-radius:50%; font-size:18px; line-height:1; color:var(--fg); }
   .menu-close:hover { color:#38BDF8; border-color:#38BDF8; background:rgba(56,189,248,.12); }
@@ -144,108 +68,78 @@
   .coffee-link { display:inline-flex; align-items:center; justify-content:center; gap:8px; color:#111827; background:#ffdd00; border-radius:999px; padding:9px 15px; font-size:12px; font-weight:800; transition:transform .15s, background .15s; }
   .coffee-link:hover { background:#ffe536; transform:translateY(-1px); }
   .coffee-link svg { width:19px; height:19px; fill:currentColor; }
-
-  /* Dashboard compacto: uma área de trabalho, sem rolagem da página. */
   .desktop-shell > header { position:relative; z-index:60; }
   .desktop-shell > main { overflow:hidden !important; }
-  #screen-main:not(.hidden) {
-    display:grid !important;
-    grid-template-columns:210px minmax(0, 1fr);
-    grid-template-rows:minmax(0, 1fr) 118px 28px;
-    gap:12px;
-    height:100%;
-  }
-  .dashboard-panel {
-    min-height:0;
-    border:1px solid rgba(100,116,139,.28);
-    border-radius:20px;
-    background:rgba(15,23,42,.62);
-  }
-  .dashboard-radar {
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    padding:14px;
-  }
+  #screen-main:not(.hidden) { display:grid !important; grid-template-columns:210px minmax(0, 1fr); grid-template-rows:minmax(0, 1fr) 118px 28px; gap:12px; height:100%; }
+  .dashboard-panel { min-height:0; border:1px solid rgba(100,116,139,.28); border-radius:20px; background:rgba(15,23,42,.62); }
+  .dashboard-radar { display:flex; flex-direction:column; align-items:center; justify-content:center; padding:14px; }
   .dashboard-radar #radarWrap { width:154px !important; height:154px !important; }
   .dashboard-control { display:flex; flex-direction:column; padding:22px; }
   .dashboard-console { grid-column:1 / -1; display:flex; flex-direction:column; padding:12px 14px; }
   .dashboard-console #terminalLog { height:auto; min-height:0; flex:1; padding:10px 12px; font-size:11px; }
-  .dashboard-tips {
-    grid-column:1 / -1;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:0 12px;
-    border:1px solid rgba(56,189,248,.12);
-    border-radius:10px;
-    background:rgba(56,189,248,.045);
-    color:#94a3b8;
-    font-size:10px;
-    text-align:center;
-  }
+  .dashboard-tips { grid-column:1 / -1; display:flex; align-items:center; justify-content:center; padding:0 12px; border:1px solid rgba(56,189,248,.12); border-radius:10px; background:rgba(56,189,248,.045); color:#94a3b8; font-size:10px; text-align:center; }
   .dashboard-stat { border-left:1px solid rgba(100,116,139,.32); padding-left:14px; }
   .dashboard-stat:first-child { border-left:0; padding-left:0; }
-  #menuOverlay, #menuOverlay.hidden {
-    z-index:40;
-  }
-  #menuOverlay nav {
-    top:var(--menu-top, 72px);
-    right:var(--menu-right, 12px);
-    bottom:auto;
-    height:auto;
-    max-height:calc(100vh - 96px);
-    overflow-y:auto;
-    min-height:0;
-    padding:12px !important;
-    border-radius:18px !important;
-    box-shadow:0 18px 45px rgba(0,0,0,.32);
-  }
+  #menuOverlay, #menuOverlay.hidden { z-index:40; }
+  #menuOverlay nav { top:var(--menu-top, 72px); right:var(--menu-right, 12px); bottom:auto; height:auto; max-height:calc(100vh - 96px); overflow-y:auto; min-height:0; padding:12px !important; border-radius:18px !important; box-shadow:0 18px 45px rgba(0,0,0,.32); }
   #menuOverlay .menu-close { display:none; }
   .app-modal { background:rgba(2,6,23,.72); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); }
-  .tour-step { display:none; }
-  .tour-step.active { display:block; animation:fade .2s ease both; }
-  .tour-progress > span { height:4px; flex:1; border-radius:99px; background:rgba(148,163,184,.25); }
-  .tour-progress > span.active { background:#22d3ee; }
-  @media (min-width:1050px) {
-    #screen-main:not(.hidden) { grid-template-columns:245px minmax(0,1fr); grid-template-rows:minmax(0,1fr) 132px 30px; gap:14px; }
-    .dashboard-radar #radarWrap { width:190px !important; height:190px !important; }
-  }
-  /* Em telas compactas, o painel vira uma coluna rolável em vez de cortar conteúdo. */
-  @media (max-width: 720px) {
-    html, body { height:auto; min-height:100%; overflow:auto; }
-    .desktop-shell { min-height:100vh !important; height:auto !important; padding:8px !important; grid-template-rows:48px minmax(0, 1fr); gap:8px; }
-    .desktop-shell > header { padding:0 10px !important; }
-    .desktop-shell > main, .desktop-shell > section { overflow:visible !important; }
-    .desktop-shell > main { min-height:calc(100vh - 64px); }
-    #screen-main:not(.hidden) { display:flex !important; height:auto; min-height:0; gap:10px; }
-    .dashboard-panel { min-height:0; border-radius:16px; }
-    .dashboard-radar { min-height:220px; }
-    .dashboard-radar #radarWrap { width:140px !important; height:140px !important; }
-    .dashboard-control { min-height:330px; padding:16px; }
-    .dashboard-console { min-height:190px; }
-    .dashboard-console #terminalLog { min-height:120px; }
-    #scanActionBtn { min-width:0; flex:1; }
-    .dashboard-stat { padding-left:8px; }
-    #screen-settings, #screen-results, #screen-logs, #screen-find-snis, #screen-about, #screen-credits { padding:8px 2px 20px; }
-    #menuOverlay nav { right:8px; max-width:calc(100vw - 16px); }
-  }
-  @media (max-width: 380px) {
-    .desktop-shell > header p:last-child { display:none; }
-    .dashboard-control .grid-cols-4 { grid-template-columns:repeat(2, minmax(0, 1fr)); row-gap:10px; }
-  }
+  #confirmModal { position: fixed !important; inset: 0 !important; z-index: 2147483647 !important; pointer-events: auto !important; }
+  #confirmModal > div { position: relative; z-index: 2147483648 !important; border-color: rgba(100,116,139,.18) !important; background: rgba(15,23,42,.96) !important; }
+  .sni-modal-overlay { position: fixed; inset: 0; z-index: 80; background: rgba(2,6,23,.65); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; padding: 20px; opacity: 0; pointer-events: none; transition: opacity .2s ease; }
+  @media (min-width:1050px) { #screen-main:not(.hidden) { grid-template-columns:245px minmax(0,1fr); grid-template-rows:minmax(0,1fr) 132px 30px; gap:14px; } .dashboard-radar #radarWrap { width:190px !important; height:190px !important; } }
+  @media (max-width: 720px) { html, body { height:auto; min-height:100%; overflow:auto; } .desktop-shell { min-height:100vh !important; height:auto !important; padding:8px !important; grid-template-rows:48px minmax(0, 1fr); gap:8px; } .desktop-shell > header { padding:0 10px !important; } .desktop-shell > main, .desktop-shell > section { overflow:visible !important; } .desktop-shell > main { min-height:calc(100vh - 64px); } #screen-main:not(.hidden) { display:flex !important; height:auto; min-height:0; gap:10px; } .dashboard-panel { min-height:0; border-radius:16px; } .dashboard-radar { min-height:220px; } .dashboard-radar #radarWrap { width:140px !important; height:140px !important; } .dashboard-control { min-height:330px; padding:16px; } .dashboard-console { min-height:190px; } .dashboard-console #terminalLog { min-height:120px; } #scanActionBtn { min-width:0; flex:1; } .dashboard-stat { padding-left:8px; } #screen-settings, #screen-results, #screen-logs, #screen-find-snis, #screen-about, #screen-credits, #screen-whatsnew { padding:8px 2px 20px; } #menuOverlay nav { right:8px; max-width:calc(100vw - 16px); } }
+  @media (max-width: 380px) { .desktop-shell > header p:last-child { display:none; } .dashboard-control .grid-cols-4 { grid-template-columns:repeat(2, minmax(0, 1fr)); row-gap:10px; } }
+
+  /* Configuracoes Premium v4.0.5 */
+  .settings-card { border: 1px solid rgba(100,116,139,.22); border-radius: 22px; background: rgba(15,23,42,.55); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); padding: 22px 24px; transition: border-color .2s, background .2s; }
+  .settings-card:hover { border-color: rgba(100,116,139,.35); background: rgba(15,23,42,.65); }
+  .settings-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.18em; color: #94a3b8; margin-bottom: 10px; display: block; }
+  .settings-input { width: 100%; border-radius: 14px; border: 1px solid rgba(100,116,139,.25); background: rgba(2,6,23,.45); padding: 11px 16px; font-size: 13px; color: #f1f5f9; transition: border-color .2s, box-shadow .2s; font-family: inherit; }
+  .settings-input::placeholder { color: #475569; }
+  .settings-input:hover { border-color: rgba(100,116,139,.45); }
+  .settings-input:focus { border-color: rgba(34,211,238,.45); box-shadow: 0 0 0 3px rgba(34,211,238,.08); outline: none; }
+  .settings-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+  .settings-row-info h3 { font-size: 14px; font-weight: 600; color: #f8fafc; margin: 0; }
+  .settings-row-info p { font-size: 12px; color: #64748b; margin: 3px 0 0; line-height: 1.5; }
+  .sni-toolbar { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
+  .sni-icon-btn { width: 36px; height: 36px; border-radius: 12px; border: 1px solid rgba(100,116,139,.25); background: rgba(2,6,23,.4); color: #94a3b8; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all .2s; flex-shrink: 0; }
+  .sni-icon-btn:hover { border-color: rgba(34,211,238,.4); color: #22d3ee; background: rgba(34,211,238,.08); }
+  .sni-icon-btn.danger:hover { border-color: rgba(244,63,94,.4); color: #f43f5e; background: rgba(244,63,94,.08); }
+  .sni-badge { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #64748b; background: rgba(2,6,23,.5); border: 1px solid rgba(100,116,139,.2); border-radius: 999px; padding: 4px 12px; }
+  .sni-modal-overlay { position: fixed; inset: 0; z-index: 80; background: rgba(2,6,23,.65); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; padding: 20px; opacity: 0; pointer-events: none; transition: opacity .2s ease; }
+  .sni-modal-overlay:not(.hidden) { opacity: 1; pointer-events: auto; }
+  .sni-modal { width: 100%; max-width: 420px; max-height: 80vh; border-radius: 24px; border: none !important; background: rgba(15,23,42,.92); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); box-shadow: 0 28px 70px rgba(0,0,0,.55); display: flex; flex-direction: column; overflow: hidden; transform: scale(.96) translateY(8px); transition: transform .25s cubic-bezier(.16,1,.3,1); }
+  .sni-modal-overlay:not(.hidden) .sni-modal { transform: scale(1) translateY(0); }
+  .sni-modal-header { display: flex; align-items: center; justify-content: space-between; padding: 18px 20px 12px; border-bottom: 1px solid rgba(148,163,184,.08); }
+  .sni-modal-header h3 { font-size: 14px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #e2e8f0; margin: 0; }
+  .sni-modal-close { width: 28px; height: 28px; border-radius: 8px; border: none; background: rgba(148,163,184,.12); color: #94a3b8; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 16px; transition: all .15s; }
+  .sni-modal-close:hover { background: rgba(244,63,94,.2); color: #f43f5e; }
+  .sni-modal-body { padding: 14px 18px; flex: 1; overflow-y: auto; min-height: 0; }
+  .sni-modal-search { width: 100%; border-radius: 14px; border: 1px solid rgba(56,189,248,.18); background: rgba(2,6,23,.55); padding: 11px 16px 11px 40px; font-size: 13px; color: #f1f5f9; margin-bottom: 12px; font-family: inherit; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.3-4.3'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: 14px center; }
+  .sni-modal-search::placeholder { color: #94a3b8; }
+  .sni-modal-search:focus { border-color: rgba(34,211,238,.4); outline: none; box-shadow: 0 0 0 3px rgba(34,211,238,.08); }
+  .sni-modal-row { border: 1px solid rgba(100,116,139,.14); background: rgba(15,23,42,.28); }
+  .sni-modal-count { font-size: 11px; color: #64748b; margin-bottom: 10px; text-align: center; }
+  .whatsnew-badge { display: inline-block; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; padding: 5px 14px; border-radius: 999px; background: rgba(34,211,238,.12); color: #22d3ee; border: 1px solid rgba(34,211,238,.25); }
+  .whatsnew-item { display: flex; gap: 14px; padding: 16px 18px; border-radius: 18px; border: 1px solid rgba(100,116,139,.18); background: rgba(15,23,42,.45); margin-bottom: 10px; transition: all .2s; }
+  .whatsnew-item:hover { border-color: rgba(100,116,139,.3); background: rgba(15,23,42,.6); }
+  .whatsnew-icon { width: 38px; height: 38px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+  .whatsnew-icon.blue { background: rgba(34,211,238,.12); }
+  .whatsnew-icon.green { background: rgba(52,211,153,.12); }
+  .whatsnew-icon.amber { background: rgba(251,191,36,.12); }
+  .whatsnew-icon.rose { background: rgba(244,63,94,.12); }
+  .whatsnew-icon.purple { background: rgba(168,85,247,.12); }
+  .version-chip { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; font-weight: 600; color: #22d3ee; background: rgba(34,211,238,.08); border: 1px solid rgba(34,211,238,.2); border-radius: 8px; padding: 3px 10px; }
 </style>
 </head>
 <body class="min-h-screen overflow-x-hidden select-none">
-
-  <!-- Fundo Tahoe: gradiente profundo + orbs -->
   <div class="fixed inset-0 -z-10" style="background: linear-gradient(135deg, var(--bg1), var(--bg2), var(--bg3));"></div>
   <div class="orb orb-1"></div>
   <div class="orb orb-2"></div>
-
   <div class="desktop-shell relative z-10">
-    <!-- ===== TOP BAR TAHOE ===== -->
+
+    <!-- HEADER -->
     <header class="glass rounded-2xl mt-4 px-3 py-2 flex items-center justify-between gap-3">
       <div class="flex items-center gap-3">
         <div class="flex h-9 w-9 items-center justify-center overflow-hidden rounded-xl">
@@ -253,10 +147,9 @@
         </div>
         <div>
           <p class="text-[10px] uppercase tracking-[0.3em] text-slate-400">SNI Tester PRO</p>
-          <p class="text-sm font-semibold text-white">Desktop</p>
+          <p class="text-sm font-semibold text-white">Desktop <span class="version-chip">v4.0.5</span></p>
         </div>
       </div>
-
       <div class="flex items-center">
         <button id="menuBtn" class="w-9 h-9 rounded-full flex items-center justify-center" title="Abrir menu" aria-label="Abrir menu">
           <span class="menu-line"></span><span class="menu-line"></span>
@@ -264,8 +157,28 @@
       </div>
     </header>
 
-    <!-- ===== TELA PRINCIPAL ===== -->
+    <!-- MAIN DASHBOARD -->
     <main id="screen-main" class="fade-in">
+      <section id="welcomeSummary" class="dashboard-panel hidden">
+        <div class="flex items-start gap-4">
+          <div class="flex h-10 w-10 items-center justify-center rounded-2xl bg-cyan-500/10 text-cyan-300 text-2xl">✨</div>
+          <div class="min-w-0">
+            <div class="flex items-center justify-between gap-4">
+              <div>
+                <p class="text-sm font-semibold text-white">Novidades 4.0.5</p>
+                <p class="mt-1 text-sm text-slate-300">Resumo rápido das melhorias principais da versão.</p>
+              </div>
+              <button id="dismissWelcomeBtn" class="text-xs uppercase tracking-[0.2em] text-cyan-300 transition hover:text-white">Fechar</button>
+            </div>
+            <div class="mt-4 grid gap-2 sm:grid-cols-2">
+              <span class="rounded-full bg-slate-900/70 px-3 py-2 text-xs font-semibold text-slate-300">Scan mais rápido com retry e cache DNS</span>
+              <span class="rounded-full bg-slate-900/70 px-3 py-2 text-xs font-semibold text-slate-300">Deep Scan mais robusto contra falsos positivos</span>
+              <span class="rounded-full bg-slate-900/70 px-3 py-2 text-xs font-semibold text-slate-300">Busca de SNIs em modal exclusivo</span>
+              <span class="rounded-full bg-slate-900/70 px-3 py-2 text-xs font-semibold text-slate-300">Configurações reorganizadas para importação e portas</span>
+            </div>
+          </div>
+        </div>
+      </section>
       <section class="dashboard-panel dashboard-radar">
         <div class="mb-3 flex items-center gap-2 text-xs">
           <span id="statusDot" class="h-2.5 w-2.5 rounded-full bg-slate-500"></span>
@@ -273,14 +186,14 @@
         </div>
         <div id="radarWrap" class="relative flex items-center justify-center rounded-full border border-slate-800/80 bg-slate-900/70 p-3">
           <canvas id="radar" width="180" height="180" class="h-full w-full"></canvas>
-          <span class="pointer-events-none absolute inset-0 flex items-center justify-center text-[9px] font-semibold uppercase tracking-[0.3em] text-slate-500">LIVE</span>
+          <span id="radarStatusText" class="pointer-events-none absolute inset-0 flex items-center justify-center text-[9px] font-semibold uppercase tracking-[0.3em] radar-off">OFF</span>
         </div>
         <p id="operatorBadge" class="mt-3 text-[10px] font-medium uppercase tracking-[0.22em] text-slate-500">DESKTOP</p>
       </section>
 
       <section class="dashboard-panel dashboard-control">
         <div class="flex items-center justify-between gap-4">
-          <button id="scanActionBtn" class="inline-flex items-center justify-center rounded-2xl border border-cyan-500/25 bg-cyan-500 px-5 py-3 text-sm font-semibold text-slate-950 transition-all duration-200 hover:bg-cyan-400">▶ START</button>
+          <button id="scanActionBtn" class="inline-flex items-center justify-center rounded-2xl border border-cyan-500/25 bg-cyan-500 px-5 py-3 text-sm font-semibold text-slate-950 transition-all duration-200 hover:bg-cyan-400">START</button>
           <span class="font-mono text-sm text-slate-400">⏱ <span id="elapsed" class="text-slate-200">00:00</span></span>
         </div>
         <div class="mt-7">
@@ -299,8 +212,8 @@
           <div class="dashboard-stat"><span class="text-slate-500">SNIs</span> <span id="metricLoaded" class="ml-1 font-semibold text-white">0</span></div>
           <div class="dashboard-stat"><span class="text-slate-500">Testados</span> <span id="metricTested" class="ml-1 font-semibold text-white">0</span></div>
           <div class="dashboard-stat"><span class="text-slate-500">Ativos</span> <span id="metricActive" class="ml-1 font-semibold text-emerald-400">0</span></div>
-          <div id="metricDeepWrap" class="dashboard-stat hidden"><span class="text-slate-500">Deep Scan</span> <span id="metricDeep" class="ml-1 font-semibold text-amber-400">0</span></div>
-          <div class="dashboard-stat"><span class="text-slate-500">Média</span> <span id="metricLatency" class="ml-1 font-semibold text-cyan-400">0ms</span></div>
+          <div id="metricDeepWrap" class="dashboard-stat hidden"><span class="text-slate-500">Deep</span> <span id="metricDeep" class="ml-1 font-semibold text-amber-400">0</span></div>
+          <div class="dashboard-stat"><span class="text-slate-500">Media</span> <span id="metricLatency" class="ml-1 font-semibold text-cyan-400">0ms</span></div>
           <span id="okBadge" class="hidden">0</span><span id="vrBadge" class="hidden">0</span><span id="testedCount" class="hidden">0 / 0</span>
         </div>
       </section>
@@ -320,67 +233,73 @@
       <div class="dashboard-tips"><span class="mr-2 text-cyan-400/70">•</span><span id="tipText" class="truncate transition-opacity duration-300"></span></div>
     </main>
 
-    <!-- ===== CONFIGURAÇÕES ===== -->
+    <!-- CONFIGURACOES PREMIUM -->
     <section id="screen-settings" class="hidden flex-1 flex flex-col fade-in">
-      <div class="mb-6 flex items-center gap-3">
+      <div class="mb-8 flex items-center gap-3">
         <button class="backBtn flex h-10 w-10 items-center justify-center rounded-full border border-slate-800 text-lg transition hover:border-slate-700 hover:bg-slate-900/40">‹</button>
         <div>
           <p class="text-[10px] uppercase tracking-[0.3em] text-slate-400">Ajustes da aplicação</p>
           <h1 class="text-xl font-semibold text-white">Configurações</h1>
         </div>
       </div>
-
-      <div class="flex-1 space-y-5 overflow-y-auto pr-2">
-        <div class="rounded-[24px] border border-slate-800 bg-slate-900/60 p-5">
-          <div class="flex items-center justify-between">
-            <div>
-              <p class="text-sm font-semibold text-white">Deep Scan (Anti-Spoofing)</p>
-              <p class="text-xs text-slate-400">Validação avançada contra falsos positivos</p>
+      <div class="flex-1 space-y-5 overflow-y-auto pr-2 pb-4">
+        <div class="settings-card mt-4">
+          <div class="settings-row">
+            <div class="settings-row-info">
+              <h3>Deep Scan <span style="font-size:10px;color:#64748b;font-weight:500;letter-spacing:0.05em;">(Anti-Spoofing)</span></h3>
+              <p>Validação avançada contra falsos positivos, hijack e portais cativos</p>
             </div>
             <div id="deepSwitch" class="switch cursor-pointer"></div>
           </div>
-          <div id="deepRow" class="hidden cursor-pointer"></div>
         </div>
-
-        <div class="rounded-[24px] border border-slate-800 bg-slate-900/60 p-5">
-          <label class="mb-3 block text-sm font-semibold text-white">Operadora <span class="text-xs text-slate-400">(Rótulo)</span></label>
-          <input id="operatorInput" class="w-full rounded-xl border border-slate-800 bg-slate-950/50 px-3.5 py-2.5 text-sm text-white placeholder-slate-500 transition hover:border-slate-700 focus:border-cyan-500/50 focus:outline-none" placeholder="Ex.: UNITEL" />
+        <div class="settings-card">
+          <label class="settings-label">Operadora</label>
+          <input id="operatorInput" class="settings-input" placeholder="Ex.: UNITEL" />
         </div>
-
-        <div class="rounded-[24px] border border-slate-800 bg-slate-900/60 p-5">
-          <label class="mb-3 block text-sm font-semibold text-white">Portas <span class="text-xs text-slate-400">(para teste)</span></label>
-          <input id="portsInput" class="w-full rounded-xl border border-slate-800 bg-slate-950/50 px-3.5 py-2.5 text-sm text-white placeholder-slate-500 transition hover:border-slate-700 focus:border-cyan-500/50 focus:outline-none" placeholder="443, 80, 8080" />
-          <p class="mt-2.5 text-[11px] text-slate-500">Separadas por vírgula. Range válido: 1–65535</p>
+        <div class="settings-card">
+          <label class="settings-label">Portas de teste</label>
+          <input id="portsInput" class="settings-input" placeholder="443, 80, 8080" />
+          <p style="font-size:11px;color:#475569;margin-top:8px;">Separadas por virgula. Range valido: 1-65535</p>
         </div>
-
-        <div class="rounded-[24px] border border-slate-800 bg-slate-900/60 p-5">
-          <label class="mb-3 block text-sm font-semibold text-white">Concorrência <span class="text-xs text-slate-400">(Testes paralelos)</span></label>
-          <input id="concurrencyInput" class="w-full rounded-xl border border-slate-800 bg-slate-950/50 px-3.5 py-2.5 text-sm text-white placeholder-slate-500 transition hover:border-slate-700 focus:border-cyan-500/50 focus:outline-none" placeholder="50" />
-          <p class="mt-2.5 text-[11px] text-slate-500">Número máximo de conexões simultâneas (50–200)</p>
+        <div class="settings-card">
+          <label class="settings-label">Concorrência</label>
+          <input id="concurrencyInput" class="settings-input" type="number" min="50" max="200" placeholder="50" />
+          <p style="font-size:11px;color:#475569;margin-top:8px;">Conexões simultâneas. Recomendado: 50-200</p>
         </div>
-
-        <div class="rounded-[24px] border border-slate-800 bg-slate-900/60 p-5">
-          <p class="mb-4 text-sm font-semibold text-white">Lista de SNIs <span class="inline-block rounded-full bg-slate-800 px-2.5 py-1 text-xs text-slate-300"><span id="sniCount">0</span> carregados</span></p>
-          <div class="mb-3 search-field">
-            <span class="search-icon">🔍</span>
-            <input id="sniSearchInput" class="w-full rounded-xl border border-slate-800 bg-slate-950/50 px-3.5 py-2.5 text-sm text-white placeholder-slate-500 transition hover:border-slate-700 focus:border-cyan-500/50 focus:outline-none" placeholder="Buscar SNI" />
+        <div class="settings-card">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+            <div>
+              <h3 style="font-size:14px;font-weight:600;color:#f8fafc;margin:0;">Lista de SNIs</h3>
+              <p style="font-size:12px;color:#64748b;margin:3px 0 0;">Gerencie os hosts importados para varredura</p>
+            </div>
+            <span class="sni-badge"><span id="sniCount">0</span> carregados</span>
           </div>
-          <div class="mb-3 flex gap-2">
-            <input id="sniInput" class="flex-1 rounded-xl border border-slate-800 bg-slate-950/50 px-3.5 py-2.5 text-sm text-white placeholder-slate-500 transition hover:border-slate-700 focus:border-cyan-500/50 focus:outline-none" placeholder="Adicionar: texto ou cole múltiplas linhas" />
-            <button id="addSniBtn" class="flex h-11 w-11 items-center justify-center rounded-xl border border-cyan-500/30 bg-cyan-500/15 text-lg font-bold text-cyan-400 transition hover:border-cyan-500/50 hover:bg-cyan-500/25">＋</button>
+          <div style="display:flex;gap:8px;margin-bottom:12px;">
+            <input id="sniInput" class="settings-input" style="flex:1;" placeholder="Adicionar SNI (texto ou multiplas linhas)" />
+            <button id="addSniBtn" class="sni-icon-btn" style="width:40px;height:40px;border-radius:14px;" title="Adicionar">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+            </button>
           </div>
-          <button id="importBtn" class="mb-3 w-full rounded-xl border border-slate-800 bg-slate-950/50 px-4 py-3 text-sm font-medium text-slate-300 transition hover:border-slate-700 hover:bg-slate-900/60">
-            📁 Selecionar arquivos
-          </button>
-          <div id="dropZone" class="mb-3 rounded-xl border-2 border-dashed border-slate-700 px-4 py-6 text-center transition hover:border-cyan-500/50 hover:bg-slate-950/50">
-            <p class="text-xs text-slate-400">Arraste aqui arquivos<br/><span class="text-slate-500">.txt, .csv, .json, .sni, .pdf, .docx, .xlsx</span></p>
+          <button id="importBtn" class="settings-input" style="text-align:center;margin-bottom:10px;cursor:pointer;color:#94a3b8;font-weight:500;">📁 Selecionar arquivos</button>
+          <div id="dropZone" class="settings-input" style="text-align:center;margin-bottom:14px;cursor:pointer;border-style:dashed;color:#64748b;">
+            <p style="font-size:12px;">Arraste arquivos aqui<br/><span style="font-size:11px;color:#475569;">.txt .csv .json .sni .pdf .docx .xlsx</span></p>
           </div>
-          <div id="sniListEl" class="max-h-48 space-y-2 overflow-y-auto"></div>
+          <div class="sni-toolbar">
+            <button id="sniSearchIconBtn" class="sni-icon-btn" title="Buscar SNIs">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            </button>
+            <button id="clearAllSniBtn" class="sni-icon-btn danger" title="Limpar todos os SNIs">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
+            </button>
+            <div style="flex:1;"></div>
+            <span style="font-size:11px;color:#475569;">Clique no ícone de lupa para buscar e gerir</span>
+          </div>
+          <div id="sniListEl" class="max-h-52 space-y-4 overflow-y-auto"></div>
         </div>
       </div>
     </section>
 
-    <!-- ===== RESULTADOS ===== -->
+    <!-- RESULTADOS -->
     <section id="screen-results" class="hidden flex-1 flex flex-col fade-in">
       <div class="mb-6 flex items-center justify-between gap-3">
         <div class="flex items-center gap-3">
@@ -396,12 +315,10 @@
           <button id="exportJsonBtn" class="rounded-full border border-slate-800 bg-slate-950/70 px-3.5 py-2 text-xs font-medium text-slate-300 transition hover:border-slate-700 hover:text-white" title="Exportar em JSON">JSON</button>
         </div>
       </div>
-
       <div id="sessionList" class="flex-1 space-y-3 overflow-y-auto pr-2"></div>
-
       <div id="sessionDetail" class="hidden flex-1 flex flex-col">
         <div id="detailHeader" class="mb-4 rounded-[24px] border border-slate-800 bg-slate-900/60 p-5 text-sm text-white"></div>
-        <input id="searchInput" class="mb-4 rounded-xl border border-slate-800 bg-slate-950/50 px-4 py-3 text-sm text-white placeholder-slate-500 transition hover:border-slate-700 focus:border-cyan-500/50 focus:outline-none" placeholder="🔍 Buscar SNI..." />
+        <input id="searchInput" class="mb-4 rounded-xl border border-slate-800 bg-slate-950/50 px-4 py-3 text-sm text-white placeholder-slate-500 transition hover:border-slate-700 focus:border-cyan-500/50 focus:outline-none" placeholder="Buscar SNI..." />
         <div class="mb-4 flex gap-2 overflow-x-auto pb-2">
           <button data-f="" class="fchip flex-shrink-0 rounded-full border border-slate-800 bg-slate-950/70 px-3.5 py-2 text-xs font-medium text-slate-300 transition hover:border-slate-700 hover:bg-slate-900 hover:text-white">TODOS</button>
           <button data-f="200 OK" class="fchip flex-shrink-0 rounded-full border border-slate-800 bg-slate-950/70 px-3.5 py-2 text-xs font-medium text-slate-300 transition hover:border-emerald-500/40 hover:bg-emerald-500/10 hover:text-emerald-400">✓ 200 OK</button>
@@ -413,7 +330,7 @@
       </div>
     </section>
 
-    <!-- ===== LOGS ===== -->
+    <!-- LOGS -->
     <section id="screen-logs" class="hidden flex-1 fade-in">
       <div class="flex items-center gap-2 mt-4 mb-4">
         <button class="backBtn w-9 h-9 text-lg">‹</button>
@@ -424,27 +341,28 @@
       </div>
     </section>
 
-    <!-- ===== ENCONTRAR SNIs ===== -->
+    <!-- ENCONTRAR SNIs -->
     <section id="screen-find-snis" class="hidden flex-1 flex flex-col fade-in">
       <div class="mb-6 flex items-center gap-3">
         <button class="backBtn flex h-10 w-10 items-center justify-center rounded-full border border-slate-800 text-lg transition hover:border-slate-700 hover:bg-slate-900/40">‹</button>
         <div><p class="text-[10px] uppercase tracking-[0.3em] text-slate-400">Pesquisa externa</p><h1 class="text-xl font-semibold text-white">Encontrar SNIs</h1></div>
       </div>
-      <p class="find-snis-intro text-sm leading-6 text-slate-400">Ferramentas públicas para pesquisar subdomínios, certificados e DNS. Abra uma delas e pesquise o domínio desejado.</p>
+      <p class="text-sm leading-6 text-slate-400" style="max-width:48rem;margin:-.5rem 0 1.25rem;">Ferramentas públicas para pesquisar subdomínios, certificados e DNS.</p>
       <div class="grid flex-1 grid-cols-1 gap-3 overflow-y-auto pr-2 sm:grid-cols-2">
-        <a href="https://crt.sh/" target="_blank" rel="noopener noreferrer" class="group rounded-2xl border border-slate-800 bg-slate-900/60 p-4 transition hover:border-cyan-500/50 hover:bg-slate-900"><p class="font-semibold text-white">crt.sh <span class="float-right text-cyan-400">↗</span></p><p class="mt-1 text-xs leading-5 text-slate-400">Certificados TLS públicos; pesquise por <span class="font-mono">%.dominio.com</span>.</p></a>
-        <a href="https://securitytrails.com/" target="_blank" rel="noopener noreferrer" class="group rounded-2xl border border-slate-800 bg-slate-900/60 p-4 transition hover:border-cyan-500/50 hover:bg-slate-900"><p class="font-semibold text-white">SecurityTrails <span class="float-right text-cyan-400">↗</span></p><p class="mt-1 text-xs leading-5 text-slate-400">Histórico DNS, hosts e descobertas de subdomínios.</p></a>
-        <a href="https://www.virustotal.com/gui/home/search" target="_blank" rel="noopener noreferrer" class="group rounded-2xl border border-slate-800 bg-slate-900/60 p-4 transition hover:border-cyan-500/50 hover:bg-slate-900"><p class="font-semibold text-white">VirusTotal <span class="float-right text-cyan-400">↗</span></p><p class="mt-1 text-xs leading-5 text-slate-400">Pesquisa de domínios e relações observadas pela plataforma.</p></a>
-        <a href="https://rapiddns.io/subdomain" target="_blank" rel="noopener noreferrer" class="group rounded-2xl border border-slate-800 bg-slate-900/60 p-4 transition hover:border-cyan-500/50 hover:bg-slate-900"><p class="font-semibold text-white">RapidDNS <span class="float-right text-cyan-400">↗</span></p><p class="mt-1 text-xs leading-5 text-slate-400">Consulta rápida de subdomínios e registros DNS públicos.</p></a>
-        <a href="https://dnsdumpster.com/" target="_blank" rel="noopener noreferrer" class="group rounded-2xl border border-slate-800 bg-slate-900/60 p-4 transition hover:border-cyan-500/50 hover:bg-slate-900"><p class="font-semibold text-white">DNSdumpster <span class="float-right text-cyan-400">↗</span></p><p class="mt-1 text-xs leading-5 text-slate-400">Mapeamento visual de DNS e hosts relacionados.</p></a>
-        <a href="https://subdomainfinder.c99.nl/" target="_blank" rel="noopener noreferrer" class="group rounded-2xl border border-slate-800 bg-slate-900/60 p-4 transition hover:border-cyan-500/50 hover:bg-slate-900"><p class="font-semibold text-white">Subdomain Finder <span class="float-right text-cyan-400">↗</span></p><p class="mt-1 text-xs leading-5 text-slate-400">Pesquisa pública de subdomínios em uma interface simples.</p></a>
-        <a href="https://api.certspotter.com/" target="_blank" rel="noopener noreferrer" class="group rounded-2xl border border-slate-800 bg-slate-900/60 p-4 transition hover:border-cyan-500/50 hover:bg-slate-900"><p class="font-semibold text-white">Cert Spotter <span class="float-right text-cyan-400">↗</span></p><p class="mt-1 text-xs leading-5 text-slate-400">Base de transparência de certificados para consultas avançadas.</p></a>
-        <a href="https://hackertarget.com/host-search/" target="_blank" rel="noopener noreferrer" class="group rounded-2xl border border-slate-800 bg-slate-900/60 p-4 transition hover:border-cyan-500/50 hover:bg-slate-900"><p class="font-semibold text-white">HackerTarget <span class="float-right text-cyan-400">↗</span></p><p class="mt-1 text-xs leading-5 text-slate-400">Busca de hosts e dados DNS disponíveis publicamente.</p></a>
+        <a href="https://crt.sh/" target="_blank" rel="noopener noreferrer" class="group rounded-2xl border border-slate-800 bg-slate-900/60 p-4 transition hover:border-cyan-500/50 hover:bg-slate-900"><p class="font-semibold text-white">crt.sh <span class="float-right text-cyan-400">↗</span></p><p class="mt-1 text-xs leading-5 text-slate-400">Certificados TLS públicos.</p></a>
+        <a href="https://securitytrails.com/" target="_blank" rel="noopener noreferrer" class="group rounded-2xl border border-slate-800 bg-slate-900/60 p-4 transition hover:border-cyan-500/50 hover:bg-slate-900"><p class="font-semibold text-white">SecurityTrails <span class="float-right text-cyan-400">↗</span></p><p class="mt-1 text-xs leading-5 text-slate-400">Histórico DNS e subdomínios.</p></a>
+        <a href="https://www.virustotal.com/gui/home/search" target="_blank" rel="noopener noreferrer" class="group rounded-2xl border border-slate-800 bg-slate-900/60 p-4 transition hover:border-cyan-500/50 hover:bg-slate-900"><p class="font-semibold text-white">VirusTotal <span class="float-right text-cyan-400">↗</span></p><p class="mt-1 text-xs leading-5 text-slate-400">Pesquisa de domínios.</p></a>
+        <a href="https://rapiddns.io/subdomain" target="_blank" rel="noopener noreferrer" class="group rounded-2xl border border-slate-800 bg-slate-900/60 p-4 transition hover:border-cyan-500/50 hover:bg-slate-900"><p class="font-semibold text-white">RapidDNS <span class="float-right text-cyan-400">↗</span></p><p class="mt-1 text-xs leading-5 text-slate-400">Consulta rápida de subdomínios.</p></a>
+        <a href="https://dnsdumpster.com/" target="_blank" rel="noopener noreferrer" class="group rounded-2xl border border-slate-800 bg-slate-900/60 p-4 transition hover:border-cyan-500/50 hover:bg-slate-900"><p class="font-semibold text-white">DNSdumpster <span class="float-right text-cyan-400">↗</span></p><p class="mt-1 text-xs leading-5 text-slate-400">Mapeamento visual de DNS.</p></a>
+        <a href="https://subdomainfinder.c99.nl/" target="_blank" rel="noopener noreferrer" class="group rounded-2xl border border-slate-800 bg-slate-900/60 p-4 transition hover:border-cyan-500/50 hover:bg-slate-900"><p class="font-semibold text-white">Subdomain Finder <span class="float-right text-cyan-400">↗</span></p><p class="mt-1 text-xs leading-5 text-slate-400">Pesquisa pública de subdomínios.</p></a>
+        <a href="https://api.certspotter.com/" target="_blank" rel="noopener noreferrer" class="group rounded-2xl border border-slate-800 bg-slate-900/60 p-4 transition hover:border-cyan-500/50 hover:bg-slate-900"><p class="font-semibold text-white">Cert Spotter <span class="float-right text-cyan-400">↗</span></p><p class="mt-1 text-xs leading-5 text-slate-400">Base de transparência de certificados.</p></a>
+        <a href="https://hackertarget.com/host-search/" target="_blank" rel="noopener noreferrer" class="group rounded-2xl border border-slate-800 bg-slate-900/60 p-4 transition hover:border-cyan-500/50 hover:bg-slate-900"><p class="font-semibold text-white">HackerTarget <span class="float-right text-cyan-400">↗</span></p><p class="mt-1 text-xs leading-5 text-slate-400">Busca de hosts e dados DNS.</p></a>
       </div>
-      <p class="mt-4 text-[11px] text-slate-500">Use somente domínios que você possui ou tem autorização para pesquisar e testar.</p>
+      <p class="mt-4 text-[11px] text-slate-500">Use somente domínios que você possui ou tem autorização para pesquisar.</p>
     </section>
 
-    <!-- ===== SOBRE ===== -->
+
+    <!-- SOBRE -->
     <section id="screen-about" class="hidden flex-1 fade-in">
       <div class="flex items-center gap-2 mt-4 mb-4">
         <button class="backBtn w-9 h-9 text-lg">‹</button>
@@ -457,18 +375,18 @@
           <p>Para resultados que exigem mais confiança, o <strong class="text-cyan-400">Deep Scan</strong> acrescenta validações de conteúdo, túnel e fluxo de dados. Isso facilita distinguir uma conexão realmente funcional de respostas incompletas, redirecionamentos ou possíveis portais cativos.</p>
           <p>Importe as suas listas, ajuste as portas e a concorrência, inicie a varredura e acompanhe tudo em tempo real no painel e no console.</p>
         </div>
-        <p class="mt-6 border-t border-slate-700/60 pt-4 text-[11px] leading-5 text-slate-500">Versão 4.0.4 PRO · Desktop Edition</p>
+        <p class="mt-6 border-t border-slate-700/60 pt-4 text-[11px] leading-5 text-slate-500">Versao 4.0.5 PRO · Desktop Edition</p>
       </div>
     </section>
 
-    <!-- ===== CRÉDITOS ===== -->
+    <!-- CREDITOS -->
     <section id="screen-credits" class="hidden flex-1 fade-in">
       <div class="flex items-center gap-2 mt-4 mb-4">
         <button class="backBtn w-9 h-9 text-lg">‹</button>
         <h1 class="text-xl font-black">Créditos</h1>
       </div>
       <div class="glass mx-auto mt-6 w-full max-w-md rounded-3xl p-6 text-center space-y-4">
-        <p class="text-xs opacity-60">Desenvolvido com <span aria-label="coração branco">🤍</span> por:</p>
+        <p class="text-xs opacity-60">Desenvolvido com <span aria-label="coracao">🤍</span> por:</p>
         <a class="credit-link text-3xl font-black" href="https://devisaacson.site" target="_blank" rel="noopener noreferrer">devisaacson</a>
         <a class="coffee-link mx-auto" href="https://buymeacoffee.com/devisaacson" target="_blank" rel="noopener noreferrer" title="Buy Me a Coffee" aria-label="Buy Me a Coffee">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h12v10.2A5.8 5.8 0 0 1 11.2 19 5.8 5.8 0 0 1 5.4 13.2V5H3V3h2Zm14 3h-1v6h1a3 3 0 0 0 0-6Zm-8 15h8v-2H6v2h5Z"/></svg>
@@ -488,36 +406,108 @@
         </div>
       </div>
     </section>
+
+    <!-- O QUE HA DE NOVO v4.0.5 -->
+    <section id="screen-whatsnew" class="hidden flex-1 flex flex-col fade-in">
+      <div class="mb-8 flex gap-3">
+        <button class="backBtn flex h-10 w-10 items-center justify-center rounded-full border border-slate-800 text-lg transition hover:border-slate-700 hover:bg-slate-900/40">‹</button>
+        <div class="flex-1">
+          <div class="mb-5">
+            <p class="text-[10px] uppercase tracking-[0.3em] text-slate-400">Atualização</p>
+            <h1 class="text-xl font-semibold text-white">O que há de novo</h1>
+          </div>
+          <div class="flex flex-wrap items-center gap-3">
+            <span class="whatsnew-badge">LANÇAMENTO v4.0.5</span>
+            <p class="text-sm text-slate-300 max-w-3xl" style="margin:0;line-height:1.7;">Esta versão traz melhorias significativas no motor de varredura, na interface de configurações e na experiência geral do usuário.</p>
+          </div>
+        </div>
+      </div>
+      <div class="flex-1 overflow-y-auto pr-2 pb-4 pt-4">
+        <div class="whatsnew-item">
+          <div class="whatsnew-icon blue">🚀</div>
+          <div>
+            <h4 style="font-size:13px;font-weight:600;color:#f8fafc;margin:0;">Motor de Teste Aprimorado</h4>
+            <p style="font-size:12px;color:#64748b;margin:4px 0 0;line-height:1.5;">Retry automático com backoff exponencial (até 3 tentativas), cache DNS com TTL de 60s para evitar re-resoluções, timeout adaptativo baseado na latência média das últimas conexões, e User-Agent rotation para dificultar fingerprinting.</p>
+          </div>
+        </div>
+        <div class="whatsnew-item">
+          <div class="whatsnew-icon green">🛡️</div>
+          <div>
+            <h4 style="font-size:13px;font-weight:600;color:#f8fafc;margin:0;">Deep Scan mais Inteligente</h4>
+            <p style="font-size:12px;color:#64748b;margin:4px 0 0;line-height:1.5;">Detecção expandida de firewalls (Sophos, Cisco), proxies (FortiGate, Zscaler) e portais cativos. Probes aleatórios únicos por requisição para evitar cache de middleboxes.</p>
+          </div>
+        </div>
+        <div class="whatsnew-item">
+          <div class="whatsnew-icon purple">✨</div>
+          <div>
+            <h4 style="font-size:13px;font-weight:600;color:#f8fafc;margin:0;">Configurações Premium</h4>
+            <p style="font-size:12px;color:#64748b;margin:4px 0 0;line-height:1.5;">Interface totalmente redesenhada na aba Configurações: cards glass com hover suave, tipografia refinada e organização minimalista. A lista de SNIs ganhou uma nova identidade visual.</p>
+          </div>
+        </div>
+        <div class="whatsnew-item">
+          <div class="whatsnew-icon amber">🔍</div>
+          <div>
+            <h4 style="font-size:13px;font-weight:600;color:#f8fafc;margin:0;">Busca de SNIs em Modal Glass</h4>
+            <p style="font-size:12px;color:#64748b;margin:4px 0 0;line-height:1.5;">Removida a barra de busca antiga. Agora um icone premium de lupa abre um modal glass exclusivo para buscar, visualizar e remover SNIs individualmente. Toolbar organizada com botoes de busca e limpar lado a lado.</p>
+          </div>
+        </div>
+        <div class="whatsnew-item">
+          <div class="whatsnew-icon rose">🎨</div>
+          <div>
+            <h4 style="font-size:13px;font-weight:600;color:#f8fafc;margin:0;">Polimento Visual</h4>
+            <p style="font-size:12px;color:#64748b;margin:4px 0 0;line-height:1.5;">Badge de versão no header, tipografia monoespaçada nos SNIs, transições mais suaves e feedback visual aprimorado em todos os botões e estados de interação.</p>
+          </div>
+        </div>
+        <div style="margin-top:20px;padding:14px 18px;border-radius:16px;border:1px solid rgba(34,211,238,.15);background:rgba(34,211,238,.04);">
+          <p style="font-size:12px;color:#94a3b8;margin:0;line-height:1.6;text-align:center;"><strong style="color:#22d3ee;">Dica:</strong> A atualização automática continua ativa. Você será notificado quando houver uma nova versão disponível.</p>
+        </div>
+      </div>
+    </section>
   </div>
 
-  <!-- ===== MENU OVERLAY ===== -->
+  <!-- MENU OVERLAY -->
   <div id="menuOverlay" class="hidden fixed inset-0 z-50 bg-black/40">
-    <nav class="absolute top-20 right-5 w-56 rounded-3xl p-3 space-y-2"
-         style="background:rgba(15,23,42,.95);border:.5px solid rgba(255,255,255,.2);backdrop-filter:blur(20px)">
+    <nav class="absolute top-20 right-5 w-56 rounded-3xl p-3 space-y-2" style="background:rgba(15,23,42,.95);border:.5px solid rgba(255,255,255,.2);backdrop-filter:blur(20px)">
       <button id="menuCloseBtn" class="menu-close" title="Fechar menu" aria-label="Fechar menu">×</button>
       <button data-nav="main"     class="navItem glass-soft rounded-2xl w-full px-4 py-3 text-left text-sm font-semibold">◉ <span>Dashboard</span></button>
       <button data-nav="settings" class="navItem glass-soft rounded-2xl w-full px-4 py-3 text-left text-sm font-semibold">⚙ <span>Configurações</span></button>
       <button data-nav="results"  class="navItem glass-soft rounded-2xl w-full px-4 py-3 text-left text-sm font-semibold">▤ <span>Resultados</span></button>
       <button data-nav="find-snis" class="navItem glass-soft rounded-2xl w-full px-4 py-3 text-left text-sm font-semibold">⌕ <span>Encontrar SNIs</span></button>
       <button data-nav="logs"     class="navItem glass-soft rounded-2xl w-full px-4 py-3 text-left text-sm font-semibold">≡ <span>Logs</span></button>
+      <button data-nav="whatsnew" class="navItem glass-soft rounded-2xl w-full px-4 py-3 text-left text-sm font-semibold">✦ <span>O que há de novo</span></button>
       <button id="checkUpdateBtn" class="navItem glass-soft rounded-2xl w-full px-4 py-3 text-left text-sm font-semibold">↻ <span>Verificar atualização</span></button>
       <button data-nav="about"    class="navItem glass-soft rounded-2xl w-full px-4 py-3 text-left text-sm font-semibold">ⓘ <span>Sobre</span></button>
-      <button data-nav="credits"  class="navItem glass-soft rounded-2xl w-full px-4 py-3 text-left text-sm font-semibold">☆ <span>Créditos</span></button>
+      <button data-nav="credits"  class="navItem glass-soft rounded-2xl w-full px-4 py-3 text-left text-sm font-semibold">☆ <span>Creditos</span></button>
     </nav>
   </div>
 
   <!-- Toast -->
-  <div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50 glass rounded-full px-5 py-2 text-xs font-bold"
-       style="background:rgba(15,23,42,.9)"></div>
+  <div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50 glass rounded-full px-5 py-2 text-xs font-bold" style="background:rgba(15,23,42,.9)"></div>
 
-  <div id="confirmModal" class="app-modal hidden fixed inset-0 z-[70] flex items-center justify-center p-5" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
+  <!-- Confirm Modal -->
+  <div id="confirmModal" class="app-modal hidden flex items-center justify-center p-5" style="position:fixed;top:0;left:0;right:0;bottom:0;z-index:2147483647;" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
     <div class="w-full max-w-md rounded-[28px] border border-slate-700 bg-slate-900 p-6 shadow-2xl">
-      <p class="text-sm uppercase tracking-[.24em] text-rose-400">Confirmar exclusão</p>
+      <p class="text-sm uppercase tracking-[.24em] text-rose-400">Confirmar exclusao</p>
       <h2 id="confirmMessage" class="mt-3 text-2xl font-bold text-white">Tem certeza?</h2>
       <p class="mt-4 text-sm leading-6 text-slate-300">Esta ação não pode ser desfeita.</p>
       <div class="mt-6 flex gap-3">
         <button id="confirmNoBtn" class="flex-1 rounded-xl border border-slate-700 px-4 py-2 text-sm text-slate-300 hover:border-slate-500 hover:text-white">Cancelar</button>
         <button id="confirmYesBtn" class="flex-1 rounded-xl bg-rose-500 px-4 py-2 text-sm font-bold text-white hover:bg-rose-400">Confirmar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SNI Search Modal Premium -->
+  <div id="sniSearchModal" class="sni-modal-overlay hidden">
+    <div class="sni-modal" id="sniModalOverlay">
+      <div class="sni-modal-header">
+        <h3>Buscar SNIs</h3>
+        <button id="sniModalClose" class="sni-modal-close">✕</button>
+      </div>
+      <div class="sni-modal-body">
+        <input id="sniModalInput" class="sni-modal-search" type="text" placeholder="Digite para filtrar..." autocomplete="off" />
+        <div id="sniModalCount" class="sni-modal-count">0 encontrados</div>
+        <div id="sniModalList" class="space-y-3"></div>
       </div>
     </div>
   </div>

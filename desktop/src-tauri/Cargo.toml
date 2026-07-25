@@ -1,6 +1,6 @@
 [package]
 name = "sni-tester-pro"
-version = "4.0.4"
+version = "4.0.5"
 description = "SNI Tester PRO — Desktop"
 edition = "2021"
 rust-version = "1.77.2"
