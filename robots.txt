@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://sni-tester-pro.vercel.app/sitemap.xml
+Sitemap: https://snitester.isaackson.site/sitemap.xml
