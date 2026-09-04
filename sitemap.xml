@@ -3,7 +3,7 @@
   
   <!-- Página Inicial -->
   <url>
-    <loc>https://sni-tester-pro.vercel.app/</loc>
+    <loc>https://snitester.isaackson.site</loc>
     <lastmod>2026-07-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
@@ -11,7 +11,7 @@
 
   <!-- Página de Apoio -->
   <url>
-    <loc>https://sni-tester-pro.vercel.app/apoie.html</loc>
+    <loc>https://snitester.isaackson.site/apoie.html</loc>
     <lastmod>2026-07-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
